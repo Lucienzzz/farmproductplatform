@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# appliaction-local.yml
+/src/main/resources/application-local.yml
+/src/main/resources/templates/test.html
 ### STS ###
 .apt_generated
 .classpath
@@ -31,6 +34,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-# appliaction-local.yml
-/src/main/resources/application-local.yml
