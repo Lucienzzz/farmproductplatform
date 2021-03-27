@@ -1,3 +1,4 @@
 spring:
   profiles:
     active: deve
+    include: local

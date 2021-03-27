@@ -1,11 +1,8 @@
-package com.zzq.farmproductplatform.dao;
+package com.zzq.farmproductplatform.repository;
 
 import com.zzq.farmproductplatform.entity.User;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public interface UserLoginDao {

@@ -1,4 +1,4 @@
-package com.zzq.farmproductplatform.dao;
+package com.zzq.farmproductplatform.repository;
 
 import com.zzq.farmproductplatform.entity.User;
 import org.apache.ibatis.annotations.Insert;

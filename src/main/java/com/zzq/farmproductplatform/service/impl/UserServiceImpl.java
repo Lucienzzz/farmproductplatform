@@ -1,9 +1,8 @@
 package com.zzq.farmproductplatform.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zzq.farmproductplatform.dao.UserDao;
+import com.zzq.farmproductplatform.repository.UserDao;
 import com.zzq.farmproductplatform.entity.User;
 import com.zzq.farmproductplatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,9 @@
 package com.zzq.farmproductplatform;
 
-import com.zzq.farmproductplatform.dao.UserDao;
-import com.zzq.farmproductplatform.entity.User;
+import com.zzq.farmproductplatform.repository.UserDao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import redis.clients.jedis.Jedis;
 
 @SpringBootTest
 class FarmproductplatformApplicationTests {
