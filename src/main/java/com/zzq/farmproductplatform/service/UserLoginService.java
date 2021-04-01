@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserLoginService {
-    int loginCounts(User user);
+    int loginCounts(String username, String password);
 }

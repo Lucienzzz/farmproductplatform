@@ -2,20 +2,17 @@ package com.zzq.farmproductplatform.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/**
+ * AJAX请求跨域
+ */
 @Configuration
-public class CrosConfig implements WebMvcConfigurer {
+public class CrosConfig extends WebMvcConfigurerAdapter {
+    static final String[] ORIGINS = new String[]{"GET", "POST", "PUT", "DELETE"};
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        // 设置允许跨域请求的域名
-        registry.addMapping("/**")
-                .allowedOriginPatterns("*")
-                // 是否允许证书（cookies）
-                .allowCredentials(true)
-                // 设置允许的方法
-                .allowedMethods("*")
-                // 跨域允许时间
-                .maxAge(3600);
+        registry.addMapping("/**").allowedOrigins("*").allowCredentials(true).allowedMethods(ORIGINS).maxAge(3600);
     }
 }
