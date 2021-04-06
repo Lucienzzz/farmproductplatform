@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public List<User> alllist() {
+    public List<User> allList() {
         PageHelper.startPage(1, 5);
         List<User> users = userDao.allList();
         PageInfo<User> pageInfo = new PageInfo<>(users);

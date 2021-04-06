@@ -12,8 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages="com.zzq.farmproductplatform")
 public class FarmproductplatformApplication {
 
-
-
     @Test
     public void a() {
         JWTUtils jwtUtils = new JWTUtils();
