@@ -7,7 +7,9 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+@EnableJpaRepositories(basePackages = "com.zzq.farmproductplatform.jpa.repository")
 @MapperScan(basePackages = "com.zzq.farmproductplatform.repository")
 @SpringBootApplication(scanBasePackages="com.zzq.farmproductplatform")
 public class FarmproductplatformApplication {
