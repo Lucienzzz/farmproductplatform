@@ -1,70 +1,10 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <title>农产品销售平台</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/layui/2.5.7/css/layui.css">
-    <script type="text/javascript" src="/webjars/jquery/3.6.0/jquery.js"></script>
-    <script type="text/javascript" src="/webjars/layui/2.5.7/layui.js"></script>
+    <title>index</title>
 </head>
 <body>
-<div class="layui-row">
-    <div class="layui-col-md4 layui-col-md-offset4">
-        <div class="layui-bg-gray" style="margin-top: 15%">
-            <form id="loginForm" class="layui-form" method="post">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">账号</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="username" lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
-                    <div class="layui-input-inline">
-                        <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">身份</label>
-                    <div class="layui-input-block ">
-                        <input type="radio" name="identity" value="买家" title="买家" checked="">
-                        <input type="radio" name="identity" value="卖家" title="卖家">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
-                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <form method="post" th:action="@{/user/login}">
-        asd<input type="text" name="username">
-        asd<input type="text" name="password">
-        <input type="submit" value="asd">
-    </form>
-</div>
+    <h1>首页</h1>
 </body>
-<script type="text/javascript">
-    // 刷新form layui自带bug
-    layui.use('form',function(){
-        var form = layui.form;
-        form.on('submit(sub)', function (data) {
-            alert("asd");
-            const identity = $("input[name='identity']:checked").val();
-            if (identity === '买家') {
-                data.form.action = "/user/login";
-            } else {
-                data.form.action = "/admin/login";
-            }
-        });
-        form.render();
-    });
-</script>
 </html>

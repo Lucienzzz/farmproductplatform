@@ -13,7 +13,7 @@ public class UserLoginServiceImpl implements UserLoginService {
     private UserLoginDao userLoginDao;
 
     @Override
-    public int loginCounts(String username, String password) {
-        return userLoginDao.loginCounts(username, password);
+    public int loginCounts(User user) {
+        return userLoginDao.loginCounts(user);
     }
 }
