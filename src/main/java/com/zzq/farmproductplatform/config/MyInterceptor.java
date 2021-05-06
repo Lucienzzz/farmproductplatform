@@ -1,53 +1,59 @@
-//package com.zzq.farmproductplatform.config;
-//
-//import com.zzq.farmproductplatform.common.Consts;
-//import com.zzq.farmproductplatform.common.JWTUtils;
-//import io.jsonwebtoken.Claims;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Component;
-//import org.springframework.web.servlet.HandlerInterceptor;
-//
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//
-//@Component
-//class MyInterceptor implements HandlerInterceptor {
-//
-//    JWTUtils jwtUtil;
-//
-//    @Autowired
-//    public void setJwtUtil(JWTUtils jwtUtils) {
-//        this.jwtUtil = jwtUtils;
-//    }
-//
-//    // 在请求进入处理器之前回调这个方法
-//    @Override
-//    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-//        // 获取请求头
-//        String header = request.getHeader("Authorization");
-//        // 请求头不为空进行解析
-//        if (header != null && !header.equals("")) {
-//            // 按照我们和前端约定的格式进行处理
-//                // 得到令牌
-//                // 验证令牌
-//                try{ // 令牌的解析这里一定的try起来,因为它解析错误的令牌时,会报错
-//                    // 当然你也可以在自定义的jwtUtil中把异常 try起来,这里就不用写了
-//                    Claims claims = jwtUtil.parseToken(header);
-//                    String roles =(String) claims.get("roles");
-//                    System.err.println("roles=="+roles);
-//                    if (Consts.ADMIN.equals(roles)){
-//                        request.setAttribute("role",header);
-//                    }
-//                    if (Consts.ORDINARY .equals(roles)){
-//                        request.setAttribute("role",header);
-//                    }
-//                }catch (Exception e){
-//                    throw new RuntimeException("令牌不存在");
-//                }
-//        } else {
-//            System.out.println("token不存在");
-//            return true;
-//        }
-//        return true;
-//    }
-//}
+package com.zzq.farmproductplatform.config;
+
+import com.zzq.farmproductplatform.common.AuthToken;
+import com.zzq.farmproductplatform.common.JWTUtils;
+import com.zzq.farmproductplatform.common.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
+
+@Component
+class MyInterceptor implements HandlerInterceptor {
+
+    JWTUtils jwtUtils;
+    @Autowired
+    public void setJwtUtils(JWTUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
+
+    private RedisTemplate<String, String> template;
+
+    @Autowired
+    public void setTemplate(RedisTemplate<String, String> template) {
+        this.template = template;
+    }
+
+    // 在请求进入处理器之前回调这个方法
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        Method method = handlerMethod.getMethod();
+        if (method.getAnnotation(AuthToken.class) != null || handlerMethod.getBeanType().getAnnotation(AuthToken.class) != null) {
+            String httpHeader = "Authorization";
+            String token = request.getParameter(httpHeader);
+            if (!StringUtils.isEmpty(token)) {
+                String username = template.opsForValue().get(token);
+                if (!StringUtils.isEmpty(username)) {
+                    request.setAttribute("curName", username);
+                    return true;
+                }
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                return false;
+            }
+        }
+        request.setAttribute("curName", null);
+        return true;
+    }
+}

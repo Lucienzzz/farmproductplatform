@@ -23,7 +23,7 @@ public class JWTUtils {
                 .setExpiration(new Date(new Date().getTime()+60*10000)) // 过期时间
                 .setIssuedAt(new Date())// 登录时间
                 // 添加自定义的键值对
-                .claim("roles",user.getStatus() == 1 ? Consts.ADMIN : Consts.ORDINARY);
+                .claim("roles",user.getStatus() == 1 ? Const.ADMIN : Const.ORDINARY);
         return builder.compact();
     }
     public Claims parseToken(String token) {

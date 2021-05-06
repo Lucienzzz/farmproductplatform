@@ -27,9 +27,15 @@ class FarmproductplatformApplicationTests {
     }
     @Test
     void a() {
-        JWTUtils jwtUtils = new JWTUtils();
-        Claims claims = jwtUtils.parseToken("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2NjYiLCJzdWIiOiJsdWN5IiwiZXhwIjoxNjE5NTgyMjYwLCJpYXQiOjE2MTk1ODE2NjAsInJvbGVzIjoiYWRtaW4ifQ.tZ_OcxpR3OK2AdKra1UunyGDYtrs-Lp3MG05e6iNE7Q");
-        System.out.println(claims);
+//        JWTUtils jwtUtils = new JWTUtils();
+//        Claims claims = jwtUtils.parseToken("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2NjYiLCJzdWIiOiJsdWN5IiwiZXhwIjoxNjE5NTgyMjYwLCJpYXQiOjE2MTk1ODE2NjAsInJvbGVzIjoiYWRtaW4ifQ.tZ_OcxpR3OK2AdKra1UunyGDYtrs-Lp3MG05e6iNE7Q");
+//        System.out.println(claims);
+//
+//        Jedis jedis = new Jedis("redis.yuhangma.com");
+//        jedis.auth("redisniub");
+//        System.out.println(jedis.ping());
+//        jedis.set("asd", "asd");
+//        System.out.println("V9ZS".equalsIgnoreCase("v9zs"));
     }
 
 }

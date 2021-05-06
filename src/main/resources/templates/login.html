@@ -6,24 +6,27 @@
 </head>
 <script type="text/javascript" th:src="@{js/jquery-3.6.0.js}"></script>
 <body>
-<form action="user/login/" method="post">
+<form th:action="@{user/login/}" method="post">
     用户名<label>
-    <input type="text" name="username">
+    <input id="username" type="text" name="username"><span></span>
 </label><br>
     密 码<label>
     <input type="password" name="password">
 </label><br>
     <label>
-        <input type="text">
+        <input type="text" name="code">
     </label><img id="nextPic" alt="验证码加载错误" th:src="@{/code}">验证码<a href="javascript:clickNext()">换一张</a><br>
     <button type="submit">登陆</button>
-    <button type="button">注册</button>
+    <button type="button" onclick="register()">注册</button>
 </form>
 </body>
 <script type="text/javascript">
     function clickNext() {
         let imgSrc = document.getElementById("nextPic");
         imgSrc.src = imgSrc.src+"?" + Math.random();
+    }
+    function register() {
+        location.href = "/register";
     }
 </script>
 </html>
