@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改店铺</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <style>
+    </style>
+</head>
+<body>
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+
+<div class="container">
+
+    <div class="form-group">
+        <label>店铺名</label>
+        <input type="text" class="form-control" autofocus="autofocus" id="shopName" name="shopName">
+    </div>
+    <div class="form-group">
+        <label>店铺分类</label>
+        <input type="text" class="form-control" id="shopCategory" name="shopCategory">
+    </div>
+    <div class="form-group">
+        <label>店铺地址</label>
+        <input type="text" class="form-control" id="shopAddress" name="shopAddress">
+    </div>
+    <div class="form-group">
+        <label>联系方式</label>
+        <input type="text" class="form-control" oninput="value=value.replace(/[^\d]/g,'')" id="shopPhone"
+               name="shopPhone">
+    </div>
+    <div class="form-group">
+        <img id="shopImages" src=""/><br>
+        <input type="file" id="shopImage">
+    </div>
+    <div class="form-group">
+        <label>店铺简介</label>
+        <textarea style="width: 100%" rows="10" id="shopDesc"></textarea>
+    </div>
+
+    <div class="form-group text-center">
+        <button class="btn btn-default btn-primary" id="edit">修改</button>
+        <button class="btn btn-default btn-warning" onclick="window.location='../user'">取消</button>
+    </div>
+
+</div>
+
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script th:src="@{/js/user.js}"></script>
+<script th:src="@{/js/common/jquery.cookie.js}"></script>
+<script>
+    $(function () {
+        var getShopInfoUrl = "./getShopInfo";
+        $.ajax({
+            url: getShopInfoUrl,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                if (data.success) {
+                    $('#shopName').val(data.shopInfo.shopName);
+                    $('#shopCategory').val(data.shopInfo.shopCategory);
+                    $('#shopAddress').val(data.shopInfo.shopAddress);
+                    $('#shopPhone').val(data.shopInfo.shopPhone);
+                    $('#shopDesc').val(data.shopInfo.shopDesc);
+                    $('#shopImages').attr("src", "/Apache/upload/item/user/shop/" + data.shopInfo.shopId + ".jpg")
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    });
+
+    $(function () {
+        var editShopInfoUrl = "./editShopInfo";
+        $('#edit').click(function () {
+            <!--店铺信息封装-->
+            var ShopInfo = {};
+            ShopInfo.shopName = $("input[name='shopName']").val();
+            ShopInfo.shopCategory = $("input[name='shopCategory']").val();
+            ShopInfo.shopAddress = $("input[name='shopAddress']").val();
+            ShopInfo.shopPhone = $("input[name='shopPhone']").val();
+            ShopInfo.shopDesc = $("#shopDesc").val();
+            var formData = new FormData();
+            formData.append('shopInfo', JSON.stringify(ShopInfo));
+            <!--店铺图片-->
+            var thumbnail = $('#shopImage')[0].files[0];
+            if (thumbnail == null) {
+                alert("头像不能为空！");
+                return;
+            }
+            formData.append('thumbnail', thumbnail);
+            $.ajax({
+                url: editShopInfoUrl,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert("修改成功！");
+                        window.location = "../user";
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

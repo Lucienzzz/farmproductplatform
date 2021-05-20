@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>确认订单</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <style>
+        .list-group-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<!--头部导航栏-->
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+<!--头部导航栏-->
+<div class="container">
+
+    <ul class="list-group">
+        <li class="list-group-item">收货地址
+            <div class="panel-body">
+                <div class="row">
+                    <select id="address">
+                        <option th:each="address:${addresses}" th:value="${address.addressId}" th:text="'姓名：'+${address.userName}+'电话：'+${address.userPhone}+'地址：'+${address.userAddress}"></option>
+                    </select>
+                </div>
+            </div></li>
+        <li class="list-group-item">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-3 col-md-2 col-lg-2">
+                        <img th:src="@{/upload/item/user/product/}+${product.productId}+'.jpg'">
+                    </div>
+                    <div class="col-xs-9 col-md-10 col-lg-10 text-info">
+                        <h2 id="productName" th:text="${product.productName}">商品名称</h2>
+                        <p id="productDesc" th:text="${product.productDesc}">商品描述</p>
+                        <input type="hidden" id="productId" th:value="${product.productId}">
+                        <input type="hidden" id="productShopId" th:value="${product.productShopId}">
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            价格
+            <div class="row">
+                        <span class="pull-right" style="padding-right: 20px">￥: <span
+                                class="text-warning" id="productPrice" th:text="${product.productPrice}"></span></span>
+            </div>
+        </li>
+        <li class="list-group-item">
+            件数
+            <div class="row">
+                        <span class="pull-right" style="padding-right: 20px"><span
+                                class="label label-success" id="count" th:text="${count}">1</span></span>
+            </div>
+
+        </li>
+        <li class="list-group-item">
+            配送方式
+            <div class="row">
+                        <span class="pull-right" style="padding-right: 20px"><span
+                                class="label label-success">快递 免邮</span></span>
+            </div>
+
+        </li>
+        <li class="list-group-item">
+            库存
+            <div class="row">
+                        <span class="pull-right" style="padding-right: 20px"><label
+                                class="badge" id="productRemaining" th:text="${product.productRemaining}"></label>件</span>
+            </div>
+        </li>
+        <li class="list-group-item">支付价格
+            <div class="row" style="padding-right: 20px">
+                <span class="label label-danger pull-right" id="countPrice"  th:text="${product.productPrice}*${count}+'元'"></span>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <button class="btn btn-warning btn-block submit_order" id="addOrder">提交订单</button>
+        </li>
+    </ul>
+
+
+</div>
+
+
+<!--尾部 版权信息-->
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<!--尾部 版权信息-->
+<script>
+    $(function () {
+        var address = $('#address').val();
+        if(address == null){
+            alert("收货地址不能为空！请添加！");
+            window.location="./user";
+        }
+    });
+
+    $(function () {
+        var addOrderUrl = "./addOrder";
+        $('#addOrder').click(function () {
+            var orderInfo = {};
+            orderInfo.productId = $('#productId').val();
+            orderInfo.shopId = $('#productShopId').val();
+            orderInfo.productName = $('#productName').text();
+            orderInfo.count = $('#count').text();
+            orderInfo.address = $('#address option:selected').val();
+            var formData = new FormData();
+            formData.append('orderInfo', JSON.stringify(orderInfo));
+            $.ajax({
+                url:addOrderUrl,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert("提交订单成功！");
+                        window.location="./user";
+                    } else {
+                        document.write(data);
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

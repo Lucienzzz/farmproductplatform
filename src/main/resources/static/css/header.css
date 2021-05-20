@@ -1,0 +1,14 @@
+.header{
+    height: 200px;
+    background: #324057 /*url(../images/snowberg.jpg)*/ no-repeat center bottom;
+    color: #8492A6;
+}
+nav.navbar{
+    background-color: #1F2D3D;
+    color: #8492A6;
+
+}
+
+nav.navbar ul .active a{
+    color: white;
+}

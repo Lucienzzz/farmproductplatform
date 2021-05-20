@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="/Apache/resources/css/product.css">
+</head>
+<body>
+
+<script src="/Apache/resources/header/header.js" id="header" url="/Apache/resources/header/"></script>
+
+<div class="container">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <p class="panel-title">商品列表</p>
+        </div>
+        <div class="panel-body">
+            <div class="row" id="prodictList">
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation" class="text-center">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="active"><a href="#">1</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!--<div class="panel panel-success">-->
+    <!--<div class="panel-heading">-->
+    <!--<p class="panel-title">好货推荐</p>-->
+    <!--</div>-->
+    <!--<div class="panel-body">-->
+    <!--<div class="row">-->
+
+
+    <!--</div>-->
+
+    <!--</div>-->
+    <!--</div>-->
+</div>
+<!--       底部信息                    -->
+<script th:src="@{/footer/footer.js}" id="footer" url="/footer/"></script>
+</body>
+</html>

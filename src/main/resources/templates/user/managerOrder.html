@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>订单管理</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+
+<div class="container">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td>订单号</td>
+            <td>商品名称</td>
+            <td>收货地址</td>
+            <td>支付金额</td>
+            <td>物流信息</td>
+            <td>订单状态</td>
+            <td>订单操作</td>
+        </tr>
+        </thead>
+        <tbody id="orders" th:each="order:${orders}">
+        <tr>
+            <td th:text="${order.orderId}">1</td>
+            <td th:text="${order.productName}">1</td>
+            <td id="address" th:text="${order.address}">1</td>
+            <td th:text="${order.price}">1</td>
+            <td id="orderId" th:text="${order.logistics}==null?'暂无物流信息':${order.logistics}">暂无物流信息</td>
+            <td th:text="${order.status}==0?'未付款':(${order.status}==1?'已付款':(${order.status}==2?'订单已关闭':(${order.status}==3?'已发货':'已收货')))">1</td>
+            <td><button th:text="${order.status}==0?'未付款':(${order.status}==1?'设置物流':(${order.status}==2?'订单已关闭':(${order.status}==3?'已发货':'已收货')))"
+                        class="btn btn-default" th:onclick="input([[${order.orderId}]])">1</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script th:src="@{/js/common/jquery.cookie.js}"></script>
+<script th:src="@{/js/user.js}"></script>
+<script>
+    $(function () {
+        var queryAddressUrl = "./queryAddressAddressId";
+        var formData = new FormData();
+        formData.append('addressId', $('#address').text());
+        $.ajax({
+            url: queryAddressUrl,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                if (data.success) {
+                    $('#address').text('姓名：'+data.address.userName+'电话：'+data.address.userPhone+'地址：'+data.address.userAddress)
+                } else {
+                }
+            }
+        });
+    });
+    function input(orderId) {
+        var a = $('#orderId');
+        var s = "<div class=\"input-group\">\n" +
+            "\t\t\t\t\t<input type=\"text\" class=\"form-control\" id='logistics'>\n" +
+            "\t\t\t\t\t<span class=\"input-group-btn\">\n" +
+            "\t\t\t\t\t\t<button class=\"btn btn-default\" id='logistics' type=\"button\" onclick='addLogistics(\"" + orderId + "\")'>\n" +
+            "\t\t\t\t\t\t\t提交物流\n" +
+            "\t\t\t\t\t\t</button>\n" +
+            "\t\t\t\t\t</span>\n" +
+            "\t\t\t\t</div>";
+        a.html("");
+        a.append(s);
+    }
+    function addLogistics(orderId) {
+        var addUrl = "./addLogistics?orderId=" + orderId + "&logistics=" + $('#logistics').val();
+        $.ajax({
+            url: addUrl,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                if (data.success) {
+                    alert("设置物流信息成功！");
+                    window.location.reload();
+                } else {
+                    alert("设置物流信息失败！"+data.message);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

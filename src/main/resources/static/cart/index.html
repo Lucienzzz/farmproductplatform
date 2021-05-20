@@ -1,0 +1,66 @@
+<!----<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>---->
+<style>
+    .cart {
+        opacity: 0.3;
+        position: fixed;
+        top: 50px;
+        left: 100%;
+        margin-left: -200px;
+
+        text-align: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        cursor: default;
+        border: 1px solid #666;
+        z-index: 9999;
+        background: #fff;
+
+    }
+
+    .cart:hover {
+        opacity: 1!important;
+        cursor: pointer;
+    }
+
+    .cart label {
+        position: absolute;
+        border-radius: 20px;
+        font-size: 20px;
+        left: 100%;
+        margin-top: -10px;
+        margin-left: -20px;
+
+    }
+
+    .cart .glyphicon {
+        color: #ff6700;
+        font-size: 60px;
+        line-height: 80px;
+    }
+
+    .cart:hover:after {
+       width: 120px;
+        content: "点击进入购物车";
+        position: absolute;
+        text-align: center;
+        top: 100%;
+        left: -20px;
+        color: white;
+        font-size: 15px;
+        border-radius: 3px;
+
+        background: rgba(0, 0, 0, 0.3);
+    }
+</style>
+
+<div class="cart ">
+    <span class="glyphicon glyphicon-shopping-cart"></span>
+    <label class="label label-info cart-num">0</label>
+</div>

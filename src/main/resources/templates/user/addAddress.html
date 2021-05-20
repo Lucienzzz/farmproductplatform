@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加收货地址</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <style>
+        .input-group {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+
+<div class="container">
+    <form class="form-group" action="./addAddress" method="post">
+        <div class="input-group">
+            <label class="input-group-addon">姓名</label>
+            <input class="form-control" autofocus="autofocus" type="text" name="userName" value="">
+        </div>
+        <div class="input-group">
+            <label class="input-group-addon">电话</label>
+            <input class="form-control" oninput="value=value.replace(/[^\d]/g,'')" type="text" name="userPhone" value="">
+        </div>
+        <div class="input-group">
+            <label class="input-group-addon">地址</label>
+            <input class="form-control" type="text" name="userAddress" value="">
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="add">添加</button>
+        </div>
+
+    </form>
+
+
+</div>
+
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+</body>
+</html>

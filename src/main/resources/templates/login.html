@@ -2,32 +2,74 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <title>登录</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/common/jquery-1.11.2.min.js}"></script>
+    <script th:src="@{/js/common/jquery.cookie.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
 </head>
-<script type="text/javascript" th:src="@{js/jquery-3.6.0.js}"></script>
 <body>
-<form th:action="@{user/login/}" method="post">
-    用户名<label>
-    <input id="username" type="text" name="username"><span></span>
-</label><br>
-    密 码<label>
-    <input type="password" name="password">
-</label><br>
-    <label>
-        <input type="text" name="code">
-    </label><img id="nextPic" alt="验证码加载错误" th:src="@{/code}">验证码<a href="javascript:clickNext()">换一张</a><br>
-    <button type="submit">登陆</button>
-    <button type="button" onclick="register()">注册</button>
-</form>
-</body>
-<script type="text/javascript">
-    function clickNext() {
-        let imgSrc = document.getElementById("nextPic");
-        imgSrc.src = imgSrc.src+"?" + Math.random();
-    }
-    function register() {
-        location.href = "/register";
-    }
-</script>
-</html>
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+<div class="container" id="form">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span>用户登录</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <span class="form-group-addon">登录账号</span>
+                    <input type="text" class="form-control" autofocus="autofocus" name="userAccount" placeholder="用户名" aria-describedby="username">
+                </div>
+                <div class="form-group">
+                    <span class="form-group-addon">密码</span>
+                    <input type="password" class="form-control" name="userPassword" placeholder="密码"
+                           aria-describedby="password">
+                </div>
+                <div class=" text-center" style="margin-top: 20px">
+                    <a href="#" id="login" class="btn-lg btn-success">登录</a>
+                    <a href="./register" class="btn-lg btn-info">注册</a>
+                </div>
 
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script>
+    $(function () {
+        var loginUrl = "/user/login";
+        $('#login').click(function () {
+            <!--用户信息-->
+            let userAccount = $("input[name='userAccount']").val();
+            let userPassword = $("input[name='userPassword']").val();
+            console.log(userAccount);
+            console.log(userPassword);
+            $.ajax({
+                url: loginUrl,
+                type: 'POST',
+                data: {
+                    "username": userAccount,
+                    "password": userPassword
+                },
+                success: function (data) {
+                    if (data.status === 200) {
+                        window.location="./index";
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

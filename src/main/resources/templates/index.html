@@ -1,10 +1,359 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>阿佩奇商城</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/common/jquery-1.11.2.min.js}"></script>
+    <script th:src="@{/js/common/jquery.cookie.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+
+    <style>
+        body {
+            font: 14px/1.5 Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, sans, 'Arial';
+            -webkit-font-smoothing: antialiased;
+            background-color: #EFF2F7;
+            color: #324057;
+
+        }
+
+        .goods-type {
+            width: 100%;
+
+
+        }
+
+        .goods-type li {
+            transition: all .2s linear;
+            text-align: center;
+
+        }
+
+        .goods-type li:not(.title):hover {
+            cursor: pointer;
+            z-index: 2;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        .banner {
+
+            width: 100%;
+
+        }
+
+        .banner img {
+            width: 800px;
+            height: 500px;
+        }
+
+        .flash-deal-row {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            background: rgba(233, 30, 90, 0.01);
+        }
+
+        .bgwite {
+            background: white;
+        }
+
+        .flash-deal {
+            padding-top: 50px;
+            height: 200px;
+            background: #C2185B;
+            color: white;
+            text-align: center;
+        }
+
+        .flash-deal h3 {
+            text-overflow: ellipsis;
+            font-size: 16px;
+            color: #bbb;
+        }
+
+        .flash-deal-good {
+            transition: all .2s linear;
+            border-radius: 3px;
+            background: white;
+            margin-top: 3px;
+            padding-top: 10px;
+            font-size: 12px;
+            text-align: center;
+            border: 1px solid #C2185B;
+            height: 200px;
+            text-overflow: ellipsis;
+            margin-bottom: 3px;
+        }
+
+        .flash-deal-good:hover {
+            cursor: pointer;
+            z-index: 2;
+            box-shadow: 0 1px 5px #C2185B;
+
+        }
+
+        .flash-deal-good .flash-deal-price {
+            margin: 10px 5px 10px 5px;
+            box-sizing: border-box;
+            border: 1px solid #C2185B;
+        }
+
+        .flash-deal-good span:nth-child(1) {
+            background: #C2185B;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .flash-deal-good span:nth-child(2) {
+            color: #666;
+            font-size: 15px;
+
+        }
+
+        .serach {
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+        }
+
+        a.redStrikeHover:link {
+            color: red;
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 <body>
-    <h1>首页</h1>
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+<!--   以上导航条        -->
+<div class="container" id="form">
+    <div class="row bgwite">
+        <!--        分类-->
+        <div class="col-lg-4 col-md-3">
+            <div class="row ">
+
+                <div class="goods-type container">
+
+                    <ul id="bigCategory" class="list-group">
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!--        轮播图-->
+        <div class="col-lg-8 col-md-9">
+            <div class="row serach">
+                <div class="input-group">
+                    <input type="text" id="searchContent" autofocus="autofocus" class="form-control" placeholder="检索商品">
+                    <div class="input-group-btn">
+                        <button id="search" class="btn btn-success" style="padding-left: 50px;padding-right: 50px">搜索
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mycan" class="banner carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators" id="point">
+                </ol>
+
+                <!--  修改这里轮播图-->
+                <div class="carousel-inner" role="listbox" id="carousel">
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row flash-deal-row bgwite">
+        <div class="col-lg-2 col-md-3">
+            <div class="flash-deal">
+                <h2>商品推荐</h2>
+                <h3>PRODUCT-LIST</h3>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-9">
+            <div class="row" id="ms">
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!--&lt;!&ndash;加载商品列表组件&ndash;&gt;-->
+<!--<div class="container">-->
+<!--<div class="row bgwite">-->
+<!--<script src="/Apache/resources/goods/goods.js" url="/Apache/resources/goods/" id="goods"></script>-->
+<!--</div>-->
+
+
+<!--</div>-->
+
+
+<!--   以上中间内容        -->
+
+
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script th:src="@{/js/user.js}"></script>
+<script th:src="@{/js/common/jquery.cookie.js}"></script>
+<script>
+    $(function () {
+        var queryAllBigCategoryUrl = "./user/queryAllBigCategory";
+        $.ajax({
+            url: queryAllBigCategoryUrl,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                if (data.status === 200) {
+                    // console.log(data);
+                    // console.log(data.data[0].product_big_category_id);
+                    // console.log(data.data[0].product_big_category_name);
+                    var s = "";
+                    for (var i = 0; i < data.data.length; i++) {
+                        s += "<li class=\"list-group-item list-group-item-info title col-lg-12 col-md-12 col-xs-12 bigCategory\" value='"+data.data[i].product_big_category_id+"'>"
+                            + data.data[i].product_big_category_name + "</li>"
+                    }
+                    $("#bigCategory").append(s);
+
+                    $(function () {
+                        var queryAllSmallCategoryUrl = "./user/queryAllSmallCategory";
+                        $.ajax({
+                            url: queryAllSmallCategoryUrl,
+                            type: 'POST',
+                            contentType: false,
+                            processData: false,
+                            cache: false,
+                            success: function (data) {
+                                // console.log(data);
+                                // console.log(data.data[0].product_category_id);
+                                // console.log(data.data[0].product_category_name);
+                                if (data.status === 200) {
+                                    var s = "";
+                                    for (var i = 0; i < data.data.length; i++) {
+                                        s = "<li class=\"list-group-item col-md-4 col-lg-3 col-xs-3 \"><a href=\"./productList?productSmallCategoryId="+data.data[i].product_category_id+"\">"+data.data[i].product_category_name+"</a></li>";
+                                        $('.bigCategory').each(function(j,n){
+                                            if($(n).val() == data.data[i].product_category_id){
+                                                $(n).after(s);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                }
+                            }
+                        });
+                    });
+                } else {
+                }
+            }
+        });
+    });
+
+    $(function () {
+        var searchProductUrl = "./searchProduct";
+        $('#search').click(function () {
+            // if($('#searchContent').val()==null){
+            //     alert("搜索不能为空！");
+            //     return;
+            // }
+            window.location=searchProductUrl+"?searchContent="+$('#searchContent').val();
+        });
+    });
+
+    $(function () {
+        var queryCarouselProductUrl = "./queryCarouselProduct";
+        $.ajax({
+            url: queryCarouselProductUrl,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                if (data.success) {
+                    var s = "";
+                    var c = "";
+                    for (var i = 0; i < data.products.length; i++) {
+                        if(i==0){
+                            s+="\n" +
+                                "                    <div class=\"item active\">\n" +
+                                "                        <img style=\"width:720px;height:388px;\" src=\"/Apache/upload/item/user/product/"+data.products[i].productId+".jpg\" alt=\"...\">\n" +
+                                "                        <div class=\"carousel-caption\">\n" +
+                                "                            <h1>"+data.products[i].productName+"</h1>\n" +
+                                "                            <p>"+data.products[i].productName+"</p>\n" +
+                                "                            <a href=\"/Apache/productInfo?productId="+data.products[i].productId+"\" class=\"btn btn-warning\">查看详情</a>\n" +
+                                "                        </div>\n" +
+                                "                    </div>";
+                            c+="\n" +
+                                "                    <li data-target=\"#mycan\" data-slide-to=\"0\" class=\"active\"></li>";
+                        }else{
+                            s+="\n" +
+                                "                    <div class=\"item\">\n" +
+                                "                        <img style=\"width:720px;height:388px;\" src=\"/Apache/upload/item/user/product/"+data.products[i].productId+".jpg\" alt=\"...\">\n" +
+                                "                        <div class=\"carousel-caption\">\n" +
+                                "                            <h1>"+data.products[i].productName+"</h1>\n" +
+                                "                            <p>"+data.products[i].productName+"</p>\n" +
+                                "                            <a href=\"/Apache/productInfo?productId="+data.products[i].productId+"\" class=\"btn btn-warning\">查看详情</a>\n" +
+                                "                        </div>\n" +
+                                "                    </div>";
+                            c+="\n" +
+                                "                    <li data-target=\"#mycan\" data-slide-to=\""+i+"\" class=\"\"></li>";
+                        }
+                    }
+                    $('#carousel').append(s);
+                    $('#point').append(c);
+                } else {
+                }
+            }
+        });
+    });
+
+    $(function () {
+        var queryCarouselProductUrl = "./queryCarouselProduct";
+        $.ajax({
+            url: queryCarouselProductUrl,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                if (data.success) {
+                    var s = "";
+                    for (var i = 0; i < data.products.length; i++) {
+                        s += "\n" +
+                            "            <div class=\"col-lg-3 col-md-3 col-xs-6\">\n" +
+                            "<a href=\"./productInfo?productId="+data.products[i].productId+"\">\n" +
+                            "                    <div class=\"flash-deal-good\">\n" +
+                            "                        <img src=\"./upload/item/user/product/"+data.products[i].productId+".jpg\" width=\"110px\" alt=\"\">\n" +
+                            "                        <p>"+data.products[i].productName+"</p>\n" +
+                            "                        <div class=\"flash-deal-price row\">\n" +
+                            "                            <span class=\"col-md-6 col-lg-6 col-xs-6\">"+data.products[i].productPrice+"</span>\n" +
+                            "                            <span class=\"col-md-6 col-lg-6 col-xs-6\"> <a href=\"#\" class=\"redStrikeHover\">\n" +
+                            "  <span style=\"color:black;\n" +
+                            "            background: none;\">"+data.products[i].productPrice+"</span>\n" +
+                            " </a></span>\n" +
+                            "                        </div>\n" +
+                            "\n" +
+                            "                    </div></a>\n" +
+                            "                </div>"
+                    }
+                    $('#ms').append(s);
+                } else {
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

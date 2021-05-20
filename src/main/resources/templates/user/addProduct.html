@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+<div class="container">
+
+        <div class="form-group">
+            <label>商品名</label>
+            <input type="text" class="form-control" autofocus="autofocus" name="productName" placeholder="商品名....">
+        </div>
+        <div class="form-group">
+            <label>商品价格</label>
+            <input type="text" class="form-control" name="productPrice" placeholder="商品价格....">
+        </div>
+        <div class="form-group">
+            <label>商品库存</label>
+            <input type="number" class="form-control" name="productRemaining" placeholder="商品库存....">
+        </div>
+        <div class="form-group">
+            <label>商品分类</label>
+            <select id="productCategory"></select>
+        </div>
+        <div class="form-group">
+            <label>商品图片</label>
+            <input type="file" class="form-control" id="productImage" placeholder="商品图片....">
+        </div>
+        <div class="form-group">
+            <label>商品简介</label>
+            <textarea style="width: 100%" rows="10" id="productDesc"></textarea>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="reset" class="btn btn-default btn-danger">重置</button>
+            <button class="btn btn-default btn-primary" id="add">发布</button>
+            <button class="btn btn-default btn-warning" onclick="window.location='/Apache/user'">取消</button>
+        </div>
+
+
+</div>
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script th:src="@{/js/user.js}"></script>
+<script th:src="@{/js/common/jquery.cookie.js}"></script>
+<script>
+    $(function () {
+        var addProductUrl = "./addProduct";
+        $('#add').click(function () {
+            var productInfo = {};
+            productInfo.productName = $("input[name='productName']").val();
+            productInfo.productPrice = $("input[name='productPrice']").val();
+            productInfo.productRemaining = $("input[name='productRemaining']").val();
+            productInfo.productCategory = $('#productCategory option:selected').val();
+            productInfo.productDesc = $("#productDesc").val();
+            var formData = new FormData();
+            formData.append('productInfo', JSON.stringify(productInfo));
+            <!--商品图片-->
+            var thumbnail = $('#productImage')[0].files[0];
+            if(thumbnail==null){
+                alert("图片不能为空！");
+                return;
+            }
+            formData.append('thumbnail', thumbnail);
+            $.ajax({
+                url:addProductUrl,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert("添加成功！");
+                        window.location="./managerProduct";
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        });
+    });
+
+    $(function () {
+        var queryAllSmallCategoryUrl = "./queryAllSmallCategory";
+        $.ajax({
+            url: queryAllSmallCategoryUrl,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                if (data.success) {
+                    var s = "";
+                    for (var i = 0; i < data.smallCategories.length; i++) {
+                        s += "<option value='" + data.smallCategories[i].smallCategoryId + "'>"
+                            + data.smallCategories[i].smallCategoryName + "</option>"
+                    }
+                    $("#productCategory").append(s);
+                } else {
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

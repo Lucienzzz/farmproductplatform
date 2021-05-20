@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <style>
+        #userHeadImage {
+            width: 100px;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <p>个人中心</p>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div CLASS="row">
+                <div class="col-lg-2 col-md-2 col-xs-4" style="margin-bottom: 20px">
+                    <img id="userHeadImage" title="点击查看大头像" src="" class="img-rounded"/>
+                </div>
+                <div class="col-lg-10 col-md-10 col-xs-8" style="margin-bottom: 20px">
+                    <h3 id="username"></h3>
+                    <span class="label" style="color:black;" id="userEmailAddress"></span><br>
+                </div>
+            </div>
+            <div class="row" id="info">
+                <div class="alert alert-info">
+                    店铺操作
+                </div>
+                <div class="container" style="margin-bottom: 10px" id="ManagerShop">
+
+                    <a id="shop" href="./user/managerShopByAdmin">
+                        <button class="btn btn-warning">管理已开通的店铺</button>
+                    </a>
+                    <a id="managerShopInfo" href="./user/managerBigCategory">
+                        <button class="btn btn-info">管理大分类</button>
+                    </a>
+                    <a id="managerProduct" href="./user/managerSmallCategory">
+                        <button class="btn btn-success">管理小分类</button>
+                    </a>
+
+                </div>
+
+                <div class="alert alert-info">
+                    用户安全
+                </div>
+                <div class="container">
+                    <button class="btn  btn-default " onclick="editPassword()">修改密码</button>
+                    <!--<button class="btn  btn-default ">修改资料</button>-->
+                    <button class="btn  btn-default" onclick="logout()">退出登录</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</DIV>
+<!--评论开始-->
+<div class="modal fade" id="createFileMModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="comment" class="col-form-label">评价内容</label>
+                        <input type="text" autofocus class="form-control" id="comment">
+                        <input type="hidden" autofocus class="form-control" id="orderId">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="createFileSureBut">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--评论结束-->
+
+<!--修改密码开始-->
+<div class="modal fade" id="password" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="comment" class="col-form-label">修改密码</label>
+                        <input type="text" autofocus class="form-control" id="newpassword">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="ok">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改密码结束-->
+<!--       底部信息                    -->
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script th:src="@{/js/user.js}"></script>
+<script th:src="@{/js/common/jquery.cookie.js}"></script>
+</body>
+</html>

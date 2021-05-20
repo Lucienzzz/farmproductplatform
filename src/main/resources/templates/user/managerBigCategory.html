@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理大分类</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <style>
+        .image {
+            width: 100px;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body>
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+
+<div class="container">
+    <table style="margin:0 auto;" class="table table-bordered table-hover">
+        <tr>
+            <th>序号</th>
+            <th>大分类名</th>
+            <th>操作</th>
+        </tr>
+        <tbody th:each="bigCategory:${bigCategorys}">
+        <tr>
+            <td th:text="${bigCategory.bigCategoryId}">1</td>
+            <td th:text="${bigCategory.bigCategoryName}">1</td>
+            <td>
+                <a th:href="${bigCategory.bigCategoryId}">
+                    <button class="btn btn-warning">修改</button>
+                </a>
+                <a th:href="${bigCategory.bigCategoryId}">
+                    <button class="btn btn-danger deleteBtn">删除</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/user/addBigCategory}">
+        <button class="btn btn-danger deleteBtn">添加</button>
+    </a>
+</div>
+
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script th:src="@{/js/user.js}"></script>
+<script th:src="@{/js/common/jquery.cookie.js}"></script>
+</body>
+</html>

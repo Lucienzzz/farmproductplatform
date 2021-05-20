@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>申请店铺</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+</head>
+<body>
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+<div class="container">
+
+        <div class="form-group">
+            <label>店铺名</label>
+            <input type="text" class="form-control" autofocus="autofocus" id="shopName" name="shopName">
+        </div>
+        <div class="form-group">
+            <label>店铺分类</label>
+            <input type="text" class="form-control" id="shopCategory" name="shopCategory">
+        </div>
+        <div class="form-group">
+            <label>店铺地址</label>
+            <input type="text" class="form-control" id="shopAddress" name="shopAddress">
+        </div>
+        <div class="form-group">
+            <label>联系方式</label>
+            <input type="text" class="form-control" oninput="value=value.replace(/[^\d]/g,'')" id="shopPhone" name="shopPhone">
+        </div>
+        <div class="form-group">
+            <label>店铺图片</label>
+            <input type="file" id="shopImage" name="shopImage">
+        </div>
+        <div class="form-group">
+            <label>店铺简介</label>
+            <textarea style="width: 100%" rows="10" id="shopDesc"></textarea>
+        </div>
+
+        <div class="form-group text-center">
+            <button class="btn btn-default btn-primary" id="apply">申请</button>
+            <button class="btn btn-default btn-warning" onclick="window.location='../user'">取消</button>
+        </div>
+
+</div>
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+
+<script th:src="@{/js/common/jquery-1.11.2.min.js}"></script>
+<script th:src="@{/js/common/jquery.cookie.js}"></script>
+<script>
+
+    $(function () {
+        var applyUrl = "./apply";
+        $('#apply').click(function () {
+            <!--店铺信息封装-->
+            var applyInfo = {};
+            applyInfo.shopName = $("input[name='shopName']").val();
+            applyInfo.shopCategory = $("input[name='shopCategory']").val();
+            applyInfo.shopAddress = $("input[name='shopAddress']").val();
+            applyInfo.shopPhone = $("input[name='shopPhone']").val();
+            applyInfo.shopDesc = $("#shopDesc").val();
+            var formData = new FormData();
+            formData.append('applyInfo', JSON.stringify(applyInfo));
+            <!--店铺图片-->
+            var thumbnail = $('#shopImage')[0].files[0];
+            if(thumbnail==null){
+                alert("头像不能为空！");
+                return;
+            }
+            formData.append('thumbnail', thumbnail);
+            $.ajax({
+                url:applyUrl,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert("申请成功！");
+                        window.location="../user";
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+
+    <style>
+        .goods-img img {
+            width: 300px;
+            border: 1px solid #999;
+        }
+
+        .goods-img {
+            padding-top: 20px;
+            text-align: center;
+            background: #BBB;
+
+        }
+
+        .goods-img-group {
+
+            margin-top: 20px;
+            height: 60px;
+            width: 100%;
+            background: #666;
+        }
+
+        .goods-img-group ul {
+            padding: 0;
+        }
+
+        .goods-img-group li {
+            background: #bbb;
+            height: 100%;
+            display: inline-block;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .goods-img-group li img {
+            width: 45px;
+            height: 55px;
+            display: inline-block;
+
+        }
+
+        .w100 {
+
+            width: 100%;
+            background: #eee;
+        }
+
+        .good-table td {
+            min-width: 40px;
+            padding-right: 20px;
+        }
+
+        .good-add_cart > div {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .good-add_cart .buy {
+            margin-left: 10px;
+            background: #FF8866;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+<!--  以上 导航条-->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-5">
+            <div class="goods-img">
+                <img id="productBigImage" src="" alt="">
+                <div class="goods-img-group">
+                    <ul class="">
+                        <li>
+                            <img th:src="@{/upload/item/user/product/}+${product.productId}+'.jpg'">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <div class="col-lg-8 col-md-7">
+        <div class="w100">
+            <div class="container">
+                <h2 id="productName" th:text="${product.productName}">商品名称：</h2>
+                <input type="hidden" th:value="${product.productId}" id="productId">
+                <table class=" good-table">
+                    <tbody>
+                    <tr>
+                        <td>售价</td>
+                        <td>￥:<span class="goods-price" id="productNowprice" th:text="${product.productPrice}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>库存</td>
+                        <td id="productRemaining" th:text="${product.productRemaining}">9999</td>
+                    </tr>
+                    <tr>
+                        <td>其他</td>
+                        <td>
+                            支持7天无理由退款 <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="good-add_cart">
+                                <div>
+                                    <input id="buyCount" type="number" class="form-control" value="1">
+                                </div>
+                                <div>
+                                    <!--<button type="button" class="btn btn-warning add_cart">加入购物车</button>-->
+                                    <button type="button" class="btn buy" onclick="buy()">直接购买</button>
+                                </div>
+                            </div>
+
+
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-2 col-md-4 col-xs-12">
+        <span class="glyphicon glyphicon-home inline"></span>
+        <span class="shop—name" id="shopName" th:text="${shop.shopName}"></span>
+    </div>
+</div>
+
+<script>
+    $(".goods-img-group ul li").hover(function () {
+        var img = $(this).find("img");
+        $(".goods-img>img").attr("src", $(img).attr("src"));
+    });
+    $(".goods-img-group ul li").click(function () {
+        var img = $(this).find("img");
+        $(".goods-img>img").attr("src", $(img).attr("src"));
+    });
+
+</script>
+
+</div>
+<div class="container">
+    <style>
+        .comment-detail {
+            height: 50px;
+            padding-top: 5px;
+            line-height: 15px;
+            padding-right: 50px;
+            padding-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+
+        }
+
+        .comment-detail p {
+            line-height: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+
+        }
+
+        .comment-detail .grade {
+            font-weight: 600;
+            color: #ff8866;
+            margin-right: -30px;
+        }
+
+    </style>
+    <div class="comment">
+        <ul class="list-group" id="comment">
+            <li class="list-group-item active">商品用户评价 <span class="pull-right label"></span></li>
+
+        </ul>
+
+    </div>
+
+</div>
+<!--评论区结束-->
+
+<!-- 加载购物车 --->
+<!--<script src="/Apache/resources/cart/cart.js" id="cart" url="/Apache/resources/cart/" cart="shoppingcart.html"></script>-->
+<!--       底部信息                    -->
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script>
+    function buy(){
+        window.location="./buy?productId="+$('#productId').val()+"&count="+$('#buyCount').val();
+    }
+</script>
+</body>
+</html>

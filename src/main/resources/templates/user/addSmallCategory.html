@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加小分类</title>
+    <link rel="shortcut icon " type="images/x-icon" th:href="@{/images/favicon.ico}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <style>
+        .input-group {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<script th:src="@{/header/header.js}" id="header" th:url="@{/header/}"></script>
+
+<div class="container">
+    <form class="form-group">
+        <div class="input-group">
+            <label>大分类</label>
+            <select id="bigCategoryName">
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="smallCategoryName" class="input-group-addon">分类名</label>
+            <input class="form-control" autofocus="autofocus" type="text" id="smallCategoryName" value="">
+        </div>
+        <div class="form-group text-center">
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="add">添加</button>
+        </div>
+
+    </form>
+
+
+</div>
+
+<script th:src="@{/footer/footer.js}" id="footer" th:url="@{/footer/}"></script>
+<script th:src="@{/js/user.js}"></script>
+<script th:src="@{/js/common/jquery.cookie.js}"></script>
+<script>
+    $(function () {
+        var addSmallCategoryUrl = "./addSmallCategory";
+        $('#add').click(function () {
+            <!--分类信息-->
+            var formData = new FormData();
+            formData.append('bigCategoryId', $('#bigCategoryName option:selected').val());
+            formData.append('smallCategoryName', $("#smallCategoryName").val());
+            $.ajax({
+                url: addSmallCategoryUrl,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert("添加分类成功！");
+                        window.location="./managerSmallCategory";
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        });
+    });
+    $(function () {
+        var queryAllBigCategoryUrl = "./queryAllBigCategory";
+        $.ajax({
+            url: queryAllBigCategoryUrl,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                if (data.success) {
+                    var s = "";
+                    for (var i = 0; i < data.bigCategories.length; i++) {
+                        s += "<option value='" + data.bigCategories[i].bigCategoryId + "'>"
+                            + data.bigCategories[i].bigCategoryName + "</option>"
+                    }
+                    $("#bigCategoryName").append(s);
+                } else {
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
