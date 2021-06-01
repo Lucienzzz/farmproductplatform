@@ -15,8 +15,8 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bs.css"/>
-    <link rel="stylesheet" href="css/book_list.css"/>
-    <title>book</title>
+    <link rel="stylesheet" href="css/product_list.css"/>
+    <title>product</title>
 </head>
 <body>
 
@@ -33,21 +33,21 @@
             <span>&gt;</span>
             <span class="search_word">${keywords}</span>
         </div>
-        <span class="total_search_book_count">
-					共<em class="red">${bookPageInfo.total}</em>本图书
+        <span class="total_search_product_count">
+					共<em class="red">${productPageInfo.total}</em>农产品
 				</span>
     </div>
     <div class="search_result">
         <div class="shoplist">
             <ul class="shoplist_ul">
 
-                <c:forEach items="${bookPageInfo.list}" var="productInfo">
+                <c:forEach items="${productPageInfo.list}" var="productInfo">
                     <li>
-                        <a href="book/info/${productInfo.bookId}" target="_blank" title="${productInfo.outline}">
+                        <a href="product/info/${productInfo.productId}" target="_blank" title="${productInfo.outline}">
                             <img src="${productInfo.imageUrl}" alt="${productInfo.outline}" width="200px" height="200px"/>
                         </a>
                         <p class="name">
-                            <a href="book/info/${productInfo.bookId}" title="${productInfo.outline}" target="_blank">
+                            <a href="product/info/${productInfo.productId}" title="${productInfo.outline}" target="_blank">
                                     ${productInfo.outline}
                             </a>
                         </p>
@@ -57,14 +57,14 @@
                             <span class="oprice">￥${productInfo.marketPrice}</span>
                             <span class="search_discount">&nbsp;(${productInfo.discount}折) </span>
                         </p>
-                        <p class="search_book_author">
+                        <p class="search_product_author">
                         </p>
                         <p class="detail">
                                 ${productInfo.detail}
                         </p>
                         <div class="shop_button">
                             <p class="bottom_p">
-                                <a class="search_btn_cart" href="cart/addition?bookId=${productInfo.bookId}&buyNum=1">加入购物车</a>
+                                <a class="search_btn_cart" href="cart/addition?productId=${productInfo.productId}&buyNum=1">加入购物车</a>
                                 <a class="search_btn_collect" href="javascript:void(0);">收藏</a>
                             </p>
                         </div>
@@ -77,34 +77,34 @@
             <%--
                 上一页
             --%>
-            <c:if test="${bookPageInfo.isFirstPage}">
+            <c:if test="${productPageInfo.isFirstPage}">
                 <li class="disabled"><a href="javascript:void(0);">前一页</a></li>
             </c:if>
 
-            <c:if test="${!bookPageInfo.isFirstPage}">
+            <c:if test="${!productPageInfo.isFirstPage}">
                 <li>
-                    <a href="book/list?keywords=${keywords}&cateId=${cateId}&page=${bookPageInfo.prePage}">前一页</a>
+                    <a href="product/list?keywords=${keywords}&cateId=${cateId}&page=${productPageInfo.prePage}">前一页</a>
                 </li>
             </c:if>
 
             <%--<c:forEach
-                    begin="${bookPageInfo.pageNum}"
-                    end="${bookPageInfo.pageNum+5 < bookPageInfo.pages ? bookPageInfo.pageNum+5 : bookPageInfo.pages }"
+                    begin="${productPageInfo.pageNum}"
+                    end="${productPageInfo.pageNum+5 < productPageInfo.pages ? productPageInfo.pageNum+5 : productPageInfo.pages }"
                     var="current">
                 <li
-                        class="${(current == bookPageInfo.pageNum) ? 'active':''}">
-                    <a href="book/list?keyword=${keywords}&cateId=${cateId}&page=${current}">
+                        class="${(current == productPageInfo.pageNum) ? 'active':''}">
+                    <a href="product/list?keyword=${keywords}&cateId=${cateId}&page=${current}">
                         ${current}
                     </a>
                 </li>
             </c:forEach>--%>
             <c:forEach
-                    begin="${bookPageInfo.pageNum < 6 ? 1 :bookPageInfo.pageNum-5}"
-                    end="${bookPageInfo.pages<6?bookPageInfo.pages:(bookPageInfo.pageNum < 6 ? 6 :bookPageInfo.pageNum) }"
+                    begin="${productPageInfo.pageNum < 6 ? 1 :productPageInfo.pageNum-5}"
+                    end="${productPageInfo.pages<6?productPageInfo.pages:(productPageInfo.pageNum < 6 ? 6 :productPageInfo.pageNum) }"
                     var="current">
                 <li
-                        class="${(current == bookPageInfo.pageNum) ? 'active':''}">
-                    <a href="book/list?keywords=${keywords}&cateId=${cateId}&page=${current}">
+                        class="${(current == productPageInfo.pageNum) ? 'active':''}">
+                    <a href="product/list?keywords=${keywords}&cateId=${cateId}&page=${current}">
                             ${current}
                     </a>
                 </li>
@@ -112,16 +112,16 @@
             <%--
                 下一页
             --%>
-            <c:if test="${bookPageInfo.isLastPage}">
+            <c:if test="${productPageInfo.isLastPage}">
                 <li class="disabled"><a href="javascript:void(0);">下一页</a></li>
             </c:if>
 
-            <c:if test="${!bookPageInfo.isLastPage}">
-                <li><a href="book/list?keywords=${keywords}&cateId=${cateId}&page=${bookPageInfo.nextPage}">下一页</a>
+            <c:if test="${!productPageInfo.isLastPage}">
+                <li><a href="product/list?keywords=${keywords}&cateId=${cateId}&page=${productPageInfo.nextPage}">下一页</a>
                 </li>
             </c:if>
 
-            <li class="disabled"><a href="javascript:void(0);">共${bookPageInfo.pages}页</a></li>
+            <li class="disabled"><a href="javascript:void(0);">共${productPageInfo.pages}页</a></li>
         </ul>
     </div>
 </div>

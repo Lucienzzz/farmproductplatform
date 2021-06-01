@@ -2,12 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zzq.farmproductplatform.model.dao.ProductDescMapper">
   <resultMap id="BaseResultMap" type="org.zzq.farmproductplatform.model.entity.ProductDesc">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="book_id" jdbcType="INTEGER" property="bookId" />
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
-    <result column="book_desc" jdbcType="LONGVARCHAR" property="productDesc" />
+    <result column="product_desc" jdbcType="LONGVARCHAR" property="productDesc" />
   </resultMap>
 </mapper>

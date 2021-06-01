@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 书籍详情服务
+ * 农产品籍详情服务
  */
 
 @Service
@@ -47,29 +47,29 @@ public class ProductInfoServiceImpl implements IProductInfoService {
 
     @Override
     @Cacheable(cacheNames="product",key = "'productInfo_'+#cateId+'_'+#currentPage+#pageSize")
-    public List<ProductInfo> findBookListByCateId(int cateId, int currentPage, int pageSize) {
+    public List<ProductInfo> findProductListByCateId(int cateId, int currentPage, int pageSize) {
         //设置分页信息，当前页，每页显示多少
         PageHelper.startPage(currentPage, pageSize);
-        Example bookInfoExample = new Example(ProductInfo.class);
-        Example.Criteria criteria = bookInfoExample.createCriteria();
+        Example productInfoExample = new Example(ProductInfo.class);
+        Example.Criteria criteria = productInfoExample.createCriteria();
         criteria.andEqualTo("productCategoryId", cateId);
         criteria.andEqualTo("isShelf", 1);
-        bookInfoExample.setOrderByClause("deal_mount DESC,look_mount DESC");
-        List<ProductInfo> books = productInfoMapper.selectByExample(bookInfoExample);
-        PageInfo<ProductInfo> pageInfo = new PageInfo<>(books);
+        productInfoExample.setOrderByClause("deal_mount DESC,look_mount DESC");
+        List<ProductInfo> products = productInfoMapper.selectByExample(productInfoExample);
+        PageInfo<ProductInfo> pageInfo = new PageInfo<>(products);
         return pageInfo.getList();
     }
 
     @Override
-    @Cacheable(cacheNames="book",key = "'bookInfo_'+#bookId")
-    public ProductInfo findById(Integer bookId) throws BSException {
-        Example bookInfoExample = new Example(ProductInfo.class);
-        Example.Criteria criteriaOfIsShelf = bookInfoExample.createCriteria();
+    @Cacheable(cacheNames="product",key = "'productInfo_'+#productId")
+    public ProductInfo findById(Integer productId) throws BSException {
+        Example productInfoExample = new Example(ProductInfo.class);
+        Example.Criteria criteriaOfIsShelf = productInfoExample.createCriteria();
         criteriaOfIsShelf.andEqualTo("isShelf", 1);
-        criteriaOfIsShelf.andEqualTo("bookId", bookId);
-        List<ProductInfo> productInfos = productInfoMapper.selectByExample(bookInfoExample);
+        criteriaOfIsShelf.andEqualTo("productId", productId);
+        List<ProductInfo> productInfos = productInfoMapper.selectByExample(productInfoExample);
         if (productInfos == null || productInfos.size() == 0) {
-            throw new BSException("你搜索的书籍不存在或未上架！");
+            throw new BSException("你搜索的农产品不存在或未上架！");
         }
         ProductInfo productInfo = productInfos.get(0);
         productInfo.setCategoryName(categoryMapper.selectByPrimaryKey(productInfo.getProductCategoryId()).getName());
@@ -82,7 +82,7 @@ public class ProductInfoServiceImpl implements IProductInfoService {
     }
 
     /**
-     * 按照一堆条件搜索书籍，查询关键字可以是书名、关键字或ISBN
+     * 按照一堆条件搜索农产品籍，查询关键字可以是农产品名、关键字或ISBN
      *
      * @param keywords
      * @param cateId
@@ -92,48 +92,48 @@ public class ProductInfoServiceImpl implements IProductInfoService {
      * @return
      */
     @Override
-    public PageInfo<ProductInfo> findBookListByCondition(String keywords, int cateId, int page, int pageSize, int storeId) {
+    public PageInfo<ProductInfo> findproductListByCondition(String keywords, int cateId, int page, int pageSize, int storeId) {
         PageHelper.startPage(page, pageSize);
-        Example bookInfoExample = new Example(ProductInfo.class);
+        Example productInfoExample = new Example(ProductInfo.class);
         if (!StringUtils.isEmpty(keywords)) {
             String s = "%" + keywords + "%";
-            Example.Criteria criteriaOfKeywords = bookInfoExample.createCriteria();
+            Example.Criteria criteriaOfKeywords = productInfoExample.createCriteria();
             criteriaOfKeywords.orLike("name", s);
         }
         if (cateId != 0) {
             //加分类Id查询条件,where (name like ? or author like ? or isbn like ?) and cateId = ?
-            Example.Criteria criteriaOfCateId = bookInfoExample.createCriteria();
+            Example.Criteria criteriaOfCateId = productInfoExample.createCriteria();
             criteriaOfCateId.andEqualTo("productCategoryId", cateId);
-            bookInfoExample.and(criteriaOfCateId);
+            productInfoExample.and(criteriaOfCateId);
         }
 
         if (storeId == 0) {
             //前台展示，是否上架
-            Example.Criteria criteriaOfIsShelf = bookInfoExample.createCriteria();
+            Example.Criteria criteriaOfIsShelf = productInfoExample.createCriteria();
             criteriaOfIsShelf.andEqualTo("isShelf", 1);
-            bookInfoExample.and(criteriaOfIsShelf);
+            productInfoExample.and(criteriaOfIsShelf);
         }else{
             //后台管理
-            Example.Criteria criteriaOfStore = bookInfoExample.createCriteria();
+            Example.Criteria criteriaOfStore = productInfoExample.createCriteria();
             criteriaOfStore.andEqualTo("storeId", storeId);
-            bookInfoExample.and(criteriaOfStore);
-            bookInfoExample.setOrderByClause("store_time DESC");
+            productInfoExample.and(criteriaOfStore);
+            productInfoExample.setOrderByClause("store_time DESC");
         }
-        List<ProductInfo> books = productInfoMapper.selectByExample(bookInfoExample);
-        PageInfo<ProductInfo> pageInfo = new PageInfo<>(books);
+        List<ProductInfo> products = productInfoMapper.selectByExample(productInfoExample);
+        PageInfo<ProductInfo> pageInfo = new PageInfo<>(products);
 
         return pageInfo;
     }
 
     @Override
-    public ProductInfo queryBookAvailable(int bookId) {
+    public ProductInfo queryproductAvailable(int productId) {
 
-        Example bookInfoExample = new Example(ProductInfo.class);
-        Example.Criteria criteria = bookInfoExample.createCriteria();
-        criteria.andEqualTo("bookId", bookId);
+        Example productInfoExample = new Example(ProductInfo.class);
+        Example.Criteria criteria = productInfoExample.createCriteria();
+        criteria.andEqualTo("productId", productId);
         criteria.andEqualTo("isShelf", 1);
         criteria.andGreaterThan("storeMount", 0);
-        List<ProductInfo> productInfos = productInfoMapper.selectByExample(bookInfoExample);
+        List<ProductInfo> productInfos = productInfoMapper.selectByExample(productInfoExample);
         if (productInfos != null && !productInfos.isEmpty()) {
             return productInfos.get(0);
         }
@@ -142,8 +142,8 @@ public class ProductInfoServiceImpl implements IProductInfoService {
 
     @Override
     @Transactional
-    @CacheEvict(cacheNames="book",allEntries = true)
-    public BSResult saveBook(ProductInfo productInfo, String bookDescStr) {
+    @CacheEvict(cacheNames="product",allEntries = true)
+    public BSResult saveproduct(ProductInfo productInfo, String productDescStr) {
 
         productInfo.setStoreTime(new Date());
         productInfo.setDiscount(productInfo.getPrice().divide(productInfo.getMarketPrice(), 2, RoundingMode.HALF_UP).multiply(new BigDecimal(10.0)));
@@ -155,8 +155,8 @@ public class ProductInfoServiceImpl implements IProductInfoService {
         productInfoMapper.insert(productInfo);
 
         ProductDesc productDesc = new ProductDesc();
-        productDesc.setBookDesc(bookDescStr);
-        productDesc.setBookId(productInfo.getProductId());
+        productDesc.setproductDesc(productDescStr);
+        productDesc.setProductId(productInfo.getProductId());
         productDesc.setCreated(new Date());
         productDesc.setUpdated(new Date());
         productDescMapper.insert(productDesc);
@@ -166,16 +166,16 @@ public class ProductInfoServiceImpl implements IProductInfoService {
 
     @Override
     @Transactional
-    @CacheEvict(cacheNames="book",allEntries = true)
-    public BSResult updateBook(ProductInfo productInfo, String bookDescStr) {
+    @CacheEvict(cacheNames="product",allEntries = true)
+    public BSResult updateproduct(ProductInfo productInfo, String productDescStr) {
 
         productInfo.setDiscount(productInfo.getPrice().divide(productInfo.getMarketPrice(), 2, RoundingMode.HALF_UP).multiply(new BigDecimal(10.0)));
 
         productInfoMapper.updateByPrimaryKeySelective(productInfo);
 
         ProductDesc productDesc = new ProductDesc();
-        productDesc.setBookDesc(bookDescStr);
-        productDesc.setBookId(productInfo.getProductId());
+        productDesc.setproductDesc(productDescStr);
+        productDesc.setProductId(productInfo.getProductId());
         productDesc.setUpdated(new Date());
         if(productDescMapper.selectByPrimaryKey(productInfo.getProductId()) == null ){
             productDesc.setCreated(new Date());
@@ -189,45 +189,45 @@ public class ProductInfoServiceImpl implements IProductInfoService {
     /**
      * 商品下架
      *
-     * @param bookId
+     * @param productId
      * @return
      */
     @Override
     @Transactional
-    @CacheEvict(cacheNames="book",allEntries = true)
-    public BSResult changeShelfStatus(int bookId,int shelf) {
+    @CacheEvict(cacheNames="product",allEntries = true)
+    public BSResult changeShelfStatus(int productId,int shelf) {
 
         ProductInfo productInfo = new ProductInfo();
-        productInfo.setProductId(bookId);
+        productInfo.setProductId(productId);
         productInfo.setIsShelf(shelf);
         productInfoMapper.updateByPrimaryKeySelective(productInfo);
         return BSResultUtil.success();
     }
 
     @Override
-    public ProductInfo adminFindById(int bookId) throws BSException {
-        Example bookInfoExample = new Example(ProductInfo.class);
-        Example.Criteria criteriaOfIsShelf = bookInfoExample.createCriteria();
-        criteriaOfIsShelf.andEqualTo("bookId", bookId);
-        ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(bookId);
+    public ProductInfo adminFindById(int productId) throws BSException {
+        Example productInfoExample = new Example(ProductInfo.class);
+        Example.Criteria criteriaOfIsShelf = productInfoExample.createCriteria();
+        criteriaOfIsShelf.andEqualTo("productId", productId);
+        ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(productId);
         if(productInfo == null){
-            throw new BSException("您搜索的书籍不存在!");
+            throw new BSException("您搜索的农产品籍不存在!");
         }
         return productInfo;
     }
 
     @Override
     @Transactional
-    public BSResult deleteBook(int bookId) {
-        productInfoMapper.deleteByPrimaryKey(bookId);
-        productDescMapper.deleteByPrimaryKey(bookId);
+    public BSResult deleteproduct(int productId) {
+        productInfoMapper.deleteByPrimaryKey(productId);
+        productDescMapper.deleteByPrimaryKey(productId);
         return BSResultUtil.success();
     }
 
 
     @Override
-    //@Cacheable(cacheNames="book",key = "'bookInfo_views'+#storeId")
-    public List<Pie> getBookViewsPiesByStoreId(Integer storeId) {
+    //@Cacheable(cacheNames="product",key = "'productInfo_views'+#storeId")
+    public List<Pie> getproductViewsPiesByStoreId(Integer storeId) {
 
         //top 8
         PageHelper.startPage(1, 8);
@@ -253,8 +253,8 @@ public class ProductInfoServiceImpl implements IProductInfoService {
     }
 
     @Override
-    //@Cacheable(cacheNames="book",key = "'bookInfo_sales'+#storeId")
-    public Bar getBookSalesBarJson(Integer storeId) {
+    //@Cacheable(cacheNames="product",key = "'productInfo_sales'+#storeId")
+    public Bar getproductSalesBarJson(Integer storeId) {
         //top 6
         PageHelper.startPage(1, 6);
 
@@ -266,7 +266,7 @@ public class ProductInfoServiceImpl implements IProductInfoService {
             return null;
         }
         Bar bar = new Bar();
-        bar.setBookNames(productInfos.stream().map(ProductInfo::getName).collect(Collectors.toList()));
+        bar.setproductNames(productInfos.stream().map(ProductInfo::getName).collect(Collectors.toList()));
         bar.setSales(productInfos.stream().map(ProductInfo::getDealMount).collect(Collectors.toList()));
 
         return bar;

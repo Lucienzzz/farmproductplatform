@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>dd书城后台管理系统</title>
+    <title>dd农产品城后台管理系统</title>
     <base href="<%=basePath%>">
     <link rel="stylesheet" href="css/bs.css"/>
 </head>

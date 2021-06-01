@@ -51,27 +51,27 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public BSResult deleteCartItem(int bookId, HttpServletRequest request) {
+    public BSResult deleteCartItem(int productId, HttpServletRequest request) {
 
         Cart cart = (Cart) request.getSession().getAttribute("cart");
         Map<Integer, CartItem> cartItems = cart.getCartItems();
-        if (cartItems.containsKey(bookId)) {
-            CartItem cartItem = cartItems.get(bookId);
+        if (cartItems.containsKey(productId)) {
+            CartItem cartItem = cartItems.get(productId);
             cart.setTotal(cart.getTotal() - cartItem.getSubTotal());
-            cartItems.remove(bookId);
+            cartItems.remove(productId);
         }
         request.getSession().setAttribute("cart", cart);
         return BSResultUtil.success();
     }
 
     @Override
-    public BSResult updateBuyNum(int bookId, int newNum, HttpServletRequest request) {
+    public BSResult updateBuyNum(int productId, int newNum, HttpServletRequest request) {
 
         Cart cart = (Cart) request.getSession().getAttribute("cart");
         Map<Integer, CartItem> cartItems = cart.getCartItems();
-        if (cartItems.containsKey(bookId)) {
-            //取出订单项所对应的书籍，根据新的购买数量重新计算小计
-            CartItem cartItem = cartItems.get(bookId);
+        if (cartItems.containsKey(productId)) {
+            //取出订单项所对应的农产品籍，根据新的购买数量重新计算小计
+            CartItem cartItem = cartItems.get(productId);
             //不知道是加还是减去商品的数量，所以先减去原来的购物项小计，最后再加新的小计
             cart.setTotal(cart.getTotal() - cartItem.getSubTotal());
             ProductInfo productInfo = cartItem.getProductInfo();
@@ -87,11 +87,11 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public BSResult checkedOrNot(Cart cart, int bookId) {
+    public BSResult checkedOrNot(Cart cart, int productId) {
         Map<Integer, CartItem> cartItems = cart.getCartItems();
 
-        if (cartItems.containsKey(bookId)) {
-            CartItem cartItem = cartItems.get(bookId);
+        if (cartItems.containsKey(productId)) {
+            CartItem cartItem = cartItems.get(productId);
             if (cartItem.isChecked()) {
                 //如果之前是true，那就设为false
                 cartItem.setChecked(false);
@@ -106,7 +106,7 @@ public class CartServiceImpl implements ICartService {
             }
             return BSResultUtil.success();
         } else
-            return BSResultUtil.build(400, "购物车没有这本书籍!");
+            return BSResultUtil.build(400, "购物车没有这本农产品籍!");
     }
 
 }

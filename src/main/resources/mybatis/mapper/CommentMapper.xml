@@ -6,7 +6,7 @@
       WARNING - @mbg.generated
     -->
     <id column="comment_id" jdbcType="INTEGER" property="commentId" />
-    <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="date" jdbcType="TIMESTAMP" property="date" />

@@ -28,14 +28,14 @@
             while (Date.now - t <= d) ;
         }
 
-        function checkOrNot(bookId, unitPrice, obj) {
+        function checkOrNot(productId, unitPrice, obj) {
             $.post(
                 "cart/checkOne",
-                {"bookId": bookId},
+                {"productId": productId},
                 function (data) {
                     if (data.code == 200) {
                         //当前购物项
-                        var $cartItem = $("#cart_item" + bookId);
+                        var $cartItem = $("#cart_item" + productId);
 
                         var $buy_num = $cartItem.find(".buy_num");
                         var num = parseInt($buy_num.val());
@@ -63,24 +63,24 @@
 
 
         //unitPrice单价
-        function add(bookId, unitPrice) {
+        function add(productId, unitPrice) {
 
             //当前购物项
-            var $cartItem = $("#cart_item" + bookId);
+            var $cartItem = $("#cart_item" + productId);
             var $checkbox = $($cartItem).find(".shop_checkbox");
             if (!$checkbox.prop("checked")) {
                 $($cartItem).find(".shop_checkbox").prop("checked", true);
-                checkOrNot(bookId, unitPrice, $("#cart_item" + bookId).find(".shop_checkbox"));
+                checkOrNot(productId, unitPrice, $("#cart_item" + productId).find(".shop_checkbox"));
                 sleep(100);
             }
 
-            //设置当前书籍购买数量
+            //设置当前农产品籍购买数量
             var $buy_num = $cartItem.find(".buy_num");
             var num = parseInt($buy_num.val()) + 1;
 
             $.post(
                 "cart/buy/num/update",
-                {"bookId": bookId, "newNum": num},
+                {"productId": productId, "newNum": num},
                 function (data) {
                     if (data.code == 200) {
                         $buy_num.val(num);
@@ -100,8 +100,8 @@
             );
         }
 
-        function sub(bookId, unitPrice) {
-            var $cartItem = $("#cart_item" + bookId);
+        function sub(productId, unitPrice) {
+            var $cartItem = $("#cart_item" + productId);
             var $buy_num = $cartItem.find(".buy_num");
             //复选框
             var $checkbox = $($cartItem).find(".shop_checkbox");
@@ -111,13 +111,13 @@
 
                 if (!$checkbox.prop("checked")) {
                     $checkbox.prop("checked", true);
-                    checkOrNot(bookId, unitPrice, $("#cart_item" + bookId).find(".shop_checkbox"));
+                    checkOrNot(productId, unitPrice, $("#cart_item" + productId).find(".shop_checkbox"));
                     sleep(100);
                 }
 
                 $.post(
                     "cart/buy/num/update",
-                    {"bookId": bookId, "newNum": num},
+                    {"productId": productId, "newNum": num},
                     function (data) {
                         if (data.code == 200) {
                             $buy_num.val(num);
@@ -139,10 +139,10 @@
             }
         }
 
-        function deleteCartItem(bookId) {
+        function deleteCartItem(productId) {
             var isDelete = confirm("真的要删除?");
             if (isDelete) {
-                location.href = "<%=basePath%>cart/deletion/" + bookId;
+                location.href = "<%=basePath%>cart/deletion/" + productId;
             }
         }
 
@@ -206,10 +206,10 @@
                 </tr>
                 <c:forEach items="${cart.cartItems}" var="cartItem">
 
-                    <tr class="cart_item" id="cart_item${cartItem.value.productInfo.bookId}">
+                    <tr class="cart_item" id="cart_item${cartItem.value.productInfo.productId}">
                         <td class="tcol1">
                             <input type="checkbox" ${cartItem.value.checked?'checked':''}
-                                   onchange="checkOrNot(${cartItem.value.productInfo.bookId},${cartItem.value.productInfo.price},this)"
+                                   onchange="checkOrNot(${cartItem.value.productInfo.productId},${cartItem.value.productInfo.price},this)"
                                    class="shop_checkbox"/>
                         </td>
                         <td>
@@ -224,9 +224,9 @@
                             <div class="num">
                                 <input type="text" disabled class="buy_num" value="${cartItem.value.buyNum}"/>
                                 <a href="javascript:void(0);" class="num_add"
-                                   onclick="add(${cartItem.value.productInfo.bookId},${cartItem.value.productInfo.price})"></a>
+                                   onclick="add(${cartItem.value.productInfo.productId},${cartItem.value.productInfo.price})"></a>
                                 <a href="javascript:void(0);" class="num_sub"
-                                   onclick="sub(${cartItem.value.productInfo.bookId},${cartItem.value.productInfo.price})"></a>
+                                   onclick="sub(${cartItem.value.productInfo.productId},${cartItem.value.productInfo.price})"></a>
                             </div>
                         </td>
                         <td>
@@ -238,7 +238,7 @@
                         </td>
                         <td>
                             <a href="javascript:void(0);"
-                               onclick="deleteCartItem(${cartItem.value.productInfo.bookId})">删除</a>
+                               onclick="deleteCartItem(${cartItem.value.productInfo.productId})">删除</a>
                         </td>
                     </tr>
                 </c:forEach>

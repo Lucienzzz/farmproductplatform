@@ -29,31 +29,31 @@ public class OrderController {
     private ICartService cartService;
 
     @Autowired
-    private IProductInfoService bookInfoService;
+    private IProductInfoService productInfoService;
 
     /**
      * 填写订单信息页面
      *
-     * @param bookId
+     * @param productId
      * @param buyNum
      * @param request
      * @return
      */
     @GetMapping("/info")
-    public String orderInfo(@RequestParam(required = false, defaultValue = "0") int bookId,
+    public String orderInfo(@RequestParam(required = false, defaultValue = "0") int productId,
                             @RequestParam(required = false, defaultValue = "0") int buyNum,
                             HttpServletRequest request) throws BSException {
 
-        if (bookId != 0) {
-            //点了立即购买，放到request域中，也session的立即购买域中以区分购物车中的书籍
-            ProductInfo productInfo = bookInfoService.findById(bookId);
+        if (productId != 0) {
+            //点了立即购买，放到request域中，也session的立即购买域中以区分购物车中的农产品籍
+            ProductInfo productInfo = productInfoService.findById(productId);
             if (productInfo != null) {
                 BSResult bsResult = cartService.addToCart(productInfo, null, buyNum);
                 request.getSession().setAttribute("buyNowCart", bsResult.getData());
                 request.setAttribute("cart", bsResult.getData());
                 return "order_info";
             } else {
-                request.setAttribute("exception", "不好意思，书籍库存不足或不存在了！");
+                request.setAttribute("exception", "不好意思，农产品籍库存不足或不存在了！");
                 return "exception";
             }
         }

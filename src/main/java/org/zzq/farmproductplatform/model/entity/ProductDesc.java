@@ -5,11 +5,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Table(name = "book_desc")
+@Table(name = "product_desc")
 public class ProductDesc {
     @Id
-    @Column(name = "book_id")
-    private Integer bookId;
+    @Column(name = "product_id")
+    private Integer productId;
 
     @Column(name = "created")
     private Date created;
@@ -17,62 +17,38 @@ public class ProductDesc {
     @Column(name = "updated")
     private Date updated;
 
-    @Column(name = "book_desc")
-    private String bookDesc;
+    @Column(name = "product_desc")
+    private String productDesc;
 
-    /**
-     * @return book_id
-     */
-    public Integer getBookId() {
-        return bookId;
+    public Integer getProductId() {
+        return productId;
     }
 
-    /**
-     * @param bookId
-     */
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
-    /**
-     * @return created
-     */
     public Date getCreated() {
         return created;
     }
 
-    /**
-     * @param created
-     */
     public void setCreated(Date created) {
         this.created = created;
     }
 
-    /**
-     * @return updated
-     */
     public Date getUpdated() {
         return updated;
     }
 
-    /**
-     * @param updated
-     */
     public void setUpdated(Date updated) {
         this.updated = updated;
     }
 
-    /**
-     * @return book_desc
-     */
-    public String getBookDesc() {
-        return bookDesc;
+    public String getproductDesc() {
+        return productDesc;
     }
 
-    /**
-     * @param bookDesc
-     */
-    public void setBookDesc(String bookDesc) {
-        this.bookDesc = bookDesc == null ? null : bookDesc.trim();
+    public void setproductDesc(String productDesc) {
+        this.productDesc = productDesc;
     }
 }

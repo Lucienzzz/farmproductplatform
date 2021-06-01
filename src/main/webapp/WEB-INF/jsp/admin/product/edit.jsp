@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/"; %>
@@ -17,7 +18,7 @@
     <script type="text/javascript">
 
         $(function () {
-            $("#bookForm").validate({
+            $("#productForm").validate({
                 //一失去焦点就校验
                 onfocusout: function (element) {
                     $(element).valid();
@@ -52,10 +53,7 @@
                     press: {
                         required: true
                     },
-                    bookCategoryId: {
-                        required: true
-                    },
-                    pictureFile: {
+                    productCategoryId: {
                         required: true
                     },
                     outline: {
@@ -67,7 +65,7 @@
                 },
                 messages: {
                     name: {
-                        required: "请输入书名",
+                        required: "请输入农产品名"
                     },
                     price: {
                         required: "请输入价格",
@@ -91,22 +89,18 @@
                     press: {
                         required: "请输入出版社"
                     },
-                    bookCategoryId: {
+                    productCategoryId: {
                         required: "请选择类别"
                     },
-                    pictureFile: {
-                        required: "请选择图片"
-                    },
                     outline: {
-                        required: "请填写书籍概要"
+                        required: "请填写农产品籍概要"
                     },
                     productDesc: {
-                        required: "请添加书籍详情"
+                        required: "请添加农产品籍详情"
                     }
                 }
             });
         });
-
         function changImg(e){
             for (var i = 0; i < e.target.files.length; i++) {
                 var file = e.target.files.item(i);
@@ -124,29 +118,30 @@
     </script>
 </head>
 <body>
+<div id="searchproduct" style="height:50px;border-bottom: 1px solid #CCCCCC;margin-bottom: 10px"></div>
 <div class="container" style="border: 1px solid #CCCCCC;">
-    <div id="searchBook" style="height:100px;border-bottom: 1px solid #CCCCCC;margin-bottom: 10px"></div>
-    <form class="form-horizontal" role="form" id="bookForm" method="post" action="admin/book/addition"
+    <form class="form-horizontal" role="form" id="productForm" method="post" action="admin/product/update"
           enctype="multipart/form-data">
-        <input type="hidden" name="storeId" value="${sessionScope.loginStore.storeId}">
+        <input type="hidden" name="storeId" value="${productInfo.storeId}">
+        <input type="hidden" name="productId" value="${productInfo.productId}">
         <div class="form-group">
             <label for="name" class="col-sm-1 control-label">标题：</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="name" name="name" placeholder="请输入书名或标题">
+                <input type="text" class="form-control" id="name" name="name" value="${productInfo.name}" placeholder="请输入农产品名或标题">
             </div>
             <span></span>
         </div>
         <div class="form-group">
             <label for="price" class="col-sm-1 control-label">价格：</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="price" name="price" placeholder="请输入价格">
+                <input type="text" class="form-control" id="price" name="price" value="${productInfo.price}" placeholder="请输入价格">
             </div>
             <span></span>
         </div>
         <div class="form-group">
             <label for="marketPrice" class="col-sm-1 control-label">定价：</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="marketPrice" name="marketPrice" placeholder="请输入定价">
+                <input type="text" class="form-control" id="marketPrice" value="${productInfo.marketPrice}" name="marketPrice" placeholder="请输入定价">
             </div>
             <span></span>
         </div>
@@ -154,7 +149,7 @@
         <div class="form-group">
             <label for="storeMount" class="col-sm-1 control-label">库存：</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="storeMount" name="storeMount" placeholder="库存">
+                <input type="text" class="form-control" id="storeMount" name="storeMount" value="${productInfo.storeMount}" placeholder="库存">
             </div>
             <span></span>
         </div>
@@ -162,7 +157,7 @@
         <div class="form-group">
             <label for="author" class="col-sm-1 control-label" style="padding-left: 0">作者：</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="author" name="author" placeholder="请输入作者">
+                <input type="text" class="form-control" id="author" value="${productInfo.author}" name="author" placeholder="请输入作者">
             </div>
             <span></span>
         </div>
@@ -170,7 +165,7 @@
         <div class="form-group">
             <label for="press" class="col-sm-1 control-label" style="padding-left: 0">出版日期：</label>
             <div class="col-sm-5">
-                <input type="date" class="form-control" id="publishDate" name="publishDate" placeholder="例:2016-01-01" >
+                <input type="date" class="form-control" id="publishDate" value="<fmt:formatDate value='${productInfo.publishDate }' pattern='yyyy-MM-dd'/>" placeholder="例:2016-01-01" name="publishDate" >
             </div>
             <span></span>
         </div>
@@ -178,48 +173,48 @@
         <div class="form-group">
             <label for="press" class="col-sm-1 control-label" style="padding-left: 0">出版社：</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="press" name="press" placeholder="请输入出版社">
+                <input type="text" class="form-control" id="press" name="press" value="${productInfo.press}" placeholder="请输入出版社">
             </div>
             <span></span>
         </div>
 
         <div class="form-group">
-            <label for="bookCategoryId" class="col-sm-1 control-label">分类：</label>
+            <label for="productCategoryId" class="col-sm-1 control-label" >类型：</label>
             <div class="col-sm-5">
-                <select name="bookCategoryId" id="bookCategoryId" class="form-control" style="width: 100px;">
-                    <c:forEach items="${applicationScope.bookCategories}" var="cate">
-                        <option value="${cate.cateId}">${cate.name}</option>
+                <select name="productCategoryId" id="productCategoryId" class="form-control" style="width: 100px;">
+                    <c:forEach items="${applicationScope.productCategories}" var="cate">
+                        <option value="${cate.cateId}" ${cate.cateId == productInfo.productCategoryId?"selected":""}>${cate.name}</option>
                     </c:forEach>
                 </select>
             </div>
             <span></span>
         </div>
         <div class="form-group">
-            <label for="pictureFile" class="col-sm-1 control-label">图片：</label>
+            <label for="pictureFile" class="col-sm-1 control-label" >图片：</label>
             <div class="col-sm-5">
                 <input type="file" id="pictureFile" name="pictureFile" onchange="changImg(event)">
-                图片预览:<img alt="暂无图片" id="myImg" src="" height="100px",width="100px">
+                图片预览:<img alt="暂无图片" id="myImg" src="${productInfo.imageUrl}" height="100px",width="100px">
             </div>
-            <span></span>
-
         </div>
         <div class="form-group">
             <label for="outline" class="col-sm-1 control-label">概述：</label>
+
             <div class="col-sm-5">
-                <textarea class="form-control" id="outline" name="outline" rows="4"></textarea>
+                 <textarea class="form-control" id="outline" name="outline" rows="4"
+                           style="padding:0px">${productInfo.outline}</textarea>
             </div>
             <span></span>
         </div>
         <div class="form-group">
-            <label for="outline" class="col-sm-1 control-label" style="padding: 0">书籍详情：</label>
+            <label for="productDesc" class="col-sm-1 control-label" style="padding: 0">农产品籍详情：</label>
         </div>
         <!-- 加载编辑器的容器 -->
-        <script id="productDesc" name="productDesc" type="text/plain">
+        <script id="productDesc" name="productDesc" id="productDesc" type="text/plain">
         </script>
         <div class="form-group">
             <div class="col-sm-5">
                 <button type="submit" class="btn btn-lg btn-default" style="margin-top: 20px;">
-                    <span class='glyphicon glyphicon-plus'></span> 添加图书
+                    保存修改
                 </button>
             </div>
         </div>
@@ -234,7 +229,7 @@
         /*UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
         UE.Editor.prototype.getActionUrl = function(action) {
             if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadvideo') {
-                return 'book/image/upload';
+                return 'product/image/upload';
                     } else {
                         return this._bkGetActionUrl.call(this, action);
                     }
@@ -244,7 +239,7 @@
         //对编辑器的操作最好在编辑器ready之后再做
         ue.ready(function () {
             //设置编辑器的内容
-            ue.setContent('在这里填写书籍详情');
+            ue.setContent('${productDesc.productDesc}');
             ue.setHeight("300");
             //获取html内容，返回: <p>hello</p>
             var html = ue.getContent();

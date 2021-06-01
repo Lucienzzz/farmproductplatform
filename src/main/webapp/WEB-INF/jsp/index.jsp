@@ -34,9 +34,9 @@
                     <a href="">特色农产品</a>
                     <span class="sort_span">></span>
                 </li>
-                <c:forEach items="${bookCategories}" var="bookCat">
+                <c:forEach items="${productCategories}" var="productCat">
                     <li class="sort_li">
-                        <a href="book/list?cateId=${bookCat.cateId}">${bookCat.name}</a>
+                        <a href="product/list?cateId=${productCat.cateId}">${productCat.name}</a>
                         <span class="sort_span">></span>
                     </li>
                 </c:forEach>
@@ -91,11 +91,11 @@
                     <c:forEach items="${productInfos}" begin="0" end="7" var="productInfo">
 
                         <li class="product_li">
-                            <a href="book/info/${productInfo.bookId}" class="img" target="_blank">
+                            <a href="product/info/${productInfo.productId}" class="img" target="_blank">
                                 <img src="${productInfo.imageUrl}"/>
                             </a>
                             <p class="name">
-                                <a href="book/info/${productInfo.bookId}">${productInfo.name}</a>
+                                <a href="product/info/${productInfo.productId}">${productInfo.name}</a>
                             </p>
                             <p class="price">
                                 <span class="rob">￥${productInfo.price}</span>
@@ -118,7 +118,7 @@
                     <li>满400减210</li>
                 </ul>
             </div>
-            <div class="hot_book">
+            <div class="hot_product">
                 <p class="title">蛋类热卖</p>
                 <ul>
                     <li>要买农产品，就来本网</li>
@@ -140,13 +140,12 @@
                 <ul class="product_ul">
                     <c:forEach items="${productInfos}" begin="8" end="17" var="productInfo">
                         <li class="product_li">
-                            <a href="book/info/${productInfo.bookId}" class="img" target="_blank">
+                            <a href="product/info/${productInfo.productId}" class="img" target="_blank">
                                 <img src="${productInfo.imageUrl}"/>
                             </a>
                             <p class="name">
-                                <a href="book/info/${productInfo.bookId}">${productInfo.name}</a>
+                                <a href="product/info/${productInfo.productId}">${productInfo.name}</a>
                             </p>
-                            <p class="author">${productInfo.author}</p>
                             <p class="price">
                                 <span class="rob">￥${productInfo.price}</span>
                                 <span class="oprice">￥${productInfo.marketPrice}</span>
@@ -157,10 +156,10 @@
             </div>
         </div>
         <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="width: 17.5%;padding: 0;padding-top:20px ;">
-            <div class="hot_book">
+            <div class="hot_product">
                 <p class="title">畅销农产品</p>
                 <ul>
-                    <li>要买好书，就来东东</li>
+                    <li>要买好农产品，就来东东</li>
                     <li>今日特惠，5折抢购</li>
                     <li>满100减50</li>
                     <li>满300减150</li>

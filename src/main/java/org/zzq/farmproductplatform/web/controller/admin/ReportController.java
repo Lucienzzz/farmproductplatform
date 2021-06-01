@@ -19,28 +19,28 @@ import java.util.List;
 public class ReportController {
 
     @Autowired
-    private IProductInfoService bookInfoService;
+    private IProductInfoService productInfoService;
 
     /**
-     * 商店书籍访问量排行饼图
+     * 商店农产品籍访问量排行饼图
      * @return
      */
     @RequestMapping("/views/pie")
-    public List<Pie> getBookViewsPieJson(HttpSession session){
+    public List<Pie> getproductViewsPieJson(HttpSession session){
         Store loginStore = (Store) session.getAttribute("loginStore");
         if(loginStore == null){
             return new ArrayList<>();
         }
-        return bookInfoService.getBookViewsPiesByStoreId(loginStore.getStoreId());
+        return productInfoService.getproductViewsPiesByStoreId(loginStore.getStoreId());
     }
 
     @RequestMapping("/sales/bar")
-    public Bar getBookSalesBarJson(HttpSession session){
+    public Bar getproductSalesBarJson(HttpSession session){
         Store loginStore = (Store) session.getAttribute("loginStore");
         if(loginStore == null){
             return null;
         }
-        return bookInfoService.getBookSalesBarJson(loginStore.getStoreId());
+        return productInfoService.getproductSalesBarJson(loginStore.getStoreId());
     }
 
 

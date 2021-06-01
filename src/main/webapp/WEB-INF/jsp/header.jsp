@@ -44,7 +44,7 @@
             <a href="index" target="_blank"><img src="${applicationScope.globalParameter.weblogo}" width="90%"/></a>
         </div>
         <div class="col-lg-6 col-md-6 col-xs-12 search">
-            <form action="book/list" class="form-inline" id="searchForm" role="form" method="get">
+            <form action="product/list" class="form-inline" id="searchForm" role="form" method="get">
                 <div class="form-group">
                     <label class="sr-only" for="keywords">关键字</label>
                     <input type="text" class="form-control" id="keywords" name="keywords" value="${keywords}"size="55"
@@ -71,8 +71,8 @@
         <ul class="nav nav-tabs header-tabs">
 
             <li class="active" id="0"><a href="">首页</a></li>
-            <c:forEach items="${bookCategories}" var="bookCat">
-                <li id="${bookCat.cateId}"><a href="index/category/${bookCat.cateId}">${bookCat.name}</a></li>
+            <c:forEach items="${productCategories}" var="productCat">
+                <li id="${productCat.cateId}"><a href="index/category/${productCat.cateId}">${productCat.name}</a></li>
             </c:forEach>
         </ul>
     </div>

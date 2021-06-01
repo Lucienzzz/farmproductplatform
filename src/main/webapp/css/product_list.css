@@ -35,7 +35,7 @@
 .search_word{
 	color: red;
 }
-.total_search_book_count{
+.total_search_product_count{
 	padding-left: 20px;
 }
 .shoplist{
@@ -76,7 +76,7 @@
 	padding-right: 10px;
 }
 
-.shoplist li .search_book_author {
+.shoplist li .search_product_author {
 	font-size: 16px;
     position: absolute;
     left: 285px;

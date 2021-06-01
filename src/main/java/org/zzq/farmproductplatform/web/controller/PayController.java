@@ -36,12 +36,12 @@ public class PayController {
         BSResult bsResult = orderService.findOrderById(orderId);
         Orders order = (Orders)bsResult.getData();
 
-        List<ProductInfo> books = orderDetailService.findBooksByOrderId(order.getOrderId());
+        List<ProductInfo> products = orderDetailService.findproductsByOrderId(order.getOrderId());
 
         PayContext payContext = new PayContext();
         payContext.setResponse(response);
         payContext.setOrders(order);
-        payContext.setProductInfos(books);
+        payContext.setProductInfos(products);
 
         try {
             alipay.pay(payContext);
@@ -64,11 +64,11 @@ public class PayController {
         BSResult bsResult = orderService.findOrderById(out_trade_no);
         Orders order = (Orders)bsResult.getData();
 
-        List<ProductInfo> books = orderDetailService.findBooksByOrderId(order.getOrderId());
+        List<ProductInfo> products = orderDetailService.findproductsByOrderId(order.getOrderId());
 
         PayContext payContext = new PayContext();
         payContext.setOrders(order);
-        payContext.setProductInfos(books);
+        payContext.setProductInfos(products);
 
         orderService.updateOrderAfterPay(payContext);
 

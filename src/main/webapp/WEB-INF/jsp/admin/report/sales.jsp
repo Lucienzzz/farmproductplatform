@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>热销书籍</title>
+    <title>热销农产品籍</title>
     <base href="<%=basePath%>">
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script src="js/highcharts/highcharts.js"></script>
@@ -26,13 +26,13 @@
                     type: 'bar'
                 },
                 title: {
-                    text: '图书总销售额条形图'
+                    text: '农产品总销售额条形图'
                 },
                 subtitle: {
                     text: '数据来源: dd.com'
                 },
                 xAxis: {
-                    categories: data.bookNames,
+                    categories: data.productNames,
                     title: {
                         text: null
                     }

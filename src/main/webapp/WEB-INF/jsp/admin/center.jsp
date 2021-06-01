@@ -16,8 +16,8 @@
 </head>
 <body>
 <div id="center_header" style="height: 100px;border-bottom: 1px solid #CCCCCC;">
-    <h1 class="h1" align="center">dd图书后台管理系统</h1>
+    <h1 class="h1" align="center">dd农产品后台管理系统</h1>
 </div>
-<h2 class="h2" align="center">${sessionScope.loginUser.username},欢迎您来到dd图书后台管理系统</h2>
+<h2 class="h2" align="center">${sessionScope.loginUser.username},欢迎您来到dd农产品后台管理系统</h2>
 </body>
 </html>

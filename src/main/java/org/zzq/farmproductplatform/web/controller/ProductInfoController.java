@@ -18,64 +18,57 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-@RequestMapping("/book")
+@RequestMapping("/product")
 public class ProductInfoController {
 
 
 
     @Autowired
-    private IProductInfoService bookInfoService;
+    private IProductInfoService productInfoService;
 
     @Autowired
     private ProductDescMapper productDescMapper;
 
-    /**
-     * 查询某一本书籍详情
-     *
-     * @param bookId
-     * @param model
-     * @return
-     */
-    @RequestMapping("/info/{bookId}")
-    public String bookInfo(@PathVariable("bookId") Integer bookId, Model model) throws BSException {
-        //查询书籍
-        ProductInfo productInfo = bookInfoService.findById(bookId);
-        //查询书籍推荐列表
-        List<ProductInfo> recommendBookList = bookInfoService.findBookListByCateId(productInfo.getProductCategoryId(), 1, 5);
-        //查询书籍详情
-        ProductDesc productDesc = productDescMapper.selectByPrimaryKey(bookId);
+    @RequestMapping("/info/{productId}")
+    public String productInfo(@PathVariable("productId") Integer productId, Model model) throws BSException {
+        //查询农产品
+        ProductInfo productInfo = productInfoService.findById(productId);
+        //查询农产品推荐列表
+        List<ProductInfo> recommendProductList = productInfoService.findProductListByCateId(productInfo.getProductCategoryId(), 1, 5);
+        //查询农产品详情
+        ProductDesc productDesc = productDescMapper.selectByPrimaryKey(productId);
         //增加访问量
-        bookInfoService.addLookMount(productInfo);
-        Collections.shuffle(recommendBookList);
-        model.addAttribute("bookInfo", productInfo);
-        model.addAttribute("bookDesc", productDesc);
-        model.addAttribute("recommendBookList", recommendBookList);
-        return "book_info";
+        productInfoService.addLookMount(productInfo);
+        Collections.shuffle(recommendProductList);
+        model.addAttribute("productInfo", productInfo);
+        model.addAttribute("productDesc", productDesc);
+        model.addAttribute("recommendProductList", recommendProductList);
+        return "product_info";
     }
 
 
     /**
-     * 通过关键字和书籍分类搜索书籍列表
+     * 通过关键字和农产品分类搜索农产品列表
      *
      * @param keywords
      * @return
      */
     @RequestMapping("/list")
-    public String bookSearchList(@RequestParam(defaultValue = "", required = false) String keywords,
+    public String productSearchList(@RequestParam(defaultValue = "", required = false) String keywords,
                                  @RequestParam(defaultValue = "0", required = false) int cateId,//分类Id，默认为0，即不按照分类Id查
                                  @RequestParam(defaultValue = "1", required = false) int page,
                                  @RequestParam(defaultValue = "6", required = false) int pageSize,
                                  Model model) {
         keywords = keywords.trim();
-        PageInfo<ProductInfo> bookPageInfo = bookInfoService.findBookListByCondition(keywords, cateId, page, pageSize,0);//storeId为0，不按照商店Id查询
+        PageInfo<ProductInfo> productPageInfo = productInfoService.findproductListByCondition(keywords, cateId, page, pageSize,0);//storeId为0，不按照商店Id查询
 
-        model.addAttribute("bookPageInfo", bookPageInfo);
+        model.addAttribute("productPageInfo", productPageInfo);
 
         model.addAttribute("keywords", keywords);
 
         model.addAttribute("cateId", cateId);
 
-        return "book_list";
+        return "product_list";
     }
 
 }

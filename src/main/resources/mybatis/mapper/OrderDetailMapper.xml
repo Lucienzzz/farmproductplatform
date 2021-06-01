@@ -8,7 +8,7 @@
     <id column="order_detail_id" jdbcType="INTEGER" property="orderDetailId" />
     <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
-    <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="store_id" jdbcType="INTEGER" property="storeId" />
     <result column="mount" jdbcType="INTEGER" property="mount" />
     <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
@@ -17,6 +17,6 @@
     <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
     <result column="receive_status" jdbcType="VARCHAR" property="receiveStatus" />
     <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
-    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
   </resultMap>
 </mapper>

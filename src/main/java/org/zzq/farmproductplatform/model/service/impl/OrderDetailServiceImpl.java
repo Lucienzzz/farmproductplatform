@@ -22,7 +22,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
     private ProductInfoMapper productInfoMapper;
 
     @Override
-    public List<ProductInfo> findBooksByOrderId(String orderId) {
+    public List<ProductInfo> findproductsByOrderId(String orderId) {
 
         Example example = new Example(OrderDetail.class);
         Example.Criteria criteria = example.createCriteria();
@@ -30,7 +30,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
         List<OrderDetail> orderDetails = orderDetailMapper.selectByExample(example);
 
         List<ProductInfo> productInfos = orderDetails.stream()
-                .map(orderDetail -> productInfoMapper.selectByPrimaryKey(orderDetail.getBookId()))
+                .map(orderDetail -> productInfoMapper.selectByPrimaryKey(orderDetail.getproductId()))
                 .collect(Collectors.toList());
 
         return productInfos;

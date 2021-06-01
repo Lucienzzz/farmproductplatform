@@ -1,10 +1,10 @@
-/*package org.zdd.bookstore;
+/*package org.zdd.productstore;
 
-import org.zdd.bookstore.model.dao.UserMapper;
-import org.zdd.bookstore.model.dao.custom.CustomMapper;
-import org.zdd.bookstore.model.entity.Privilege;
-import org.zdd.bookstore.model.entity.Role;
-import org.zdd.bookstore.model.service.IUserService;
+import org.zdd.productstore.model.dao.UserMapper;
+import org.zdd.productstore.model.dao.custom.CustomMapper;
+import org.zdd.productstore.model.entity.Privilege;
+import org.zdd.productstore.model.entity.Role;
+import org.zdd.productstore.model.service.IUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BookstoreApplicationTests {
+public class productstoreApplicationTests {
 
     @Autowired
     private CustomMapper customMapper;

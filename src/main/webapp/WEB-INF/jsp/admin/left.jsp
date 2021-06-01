@@ -150,10 +150,10 @@
                                 <a href="admin/store/${sessionScope.loginStore.storeId}" target="centerFrame">店铺信息</a>
                             </li>
                             <li>
-                                <a href="admin/book/list?page=1" target="centerFrame">我的图书</a>
+                                <a href="admin/product/list?page=1" target="centerFrame">我的农产品</a>
                             </li>
                             <li>
-                                <a href="admin/book/toAddition" target="centerFrame">图书上新</a>
+                                <a href="admin/product/toAddition" target="centerFrame">农产品上新</a>
                             </li>
                             <li>
                                 <a href="admin/order/list" target="centerFrame">订单管理</a>

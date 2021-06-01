@@ -19,7 +19,7 @@ public class InitWebInfoCommandLineRunner implements CommandLineRunner {
     private ServletContext servletContext;
 
     @Autowired
-    private IProductCateService bookCateService;
+    private IProductCateService productInfoService;
 
     @Autowired
     private GlobalParameterMapper globalParameterMapper;
@@ -28,10 +28,10 @@ public class InitWebInfoCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        List<ProductCategory> bookCategories = bookCateService.getCategoryList();
+        List<ProductCategory> productInfo = productInfoService.getCategoryList();
         List<GlobalParameter> globalParameters = globalParameterMapper.selectByExample(new Example(GlobalParameter.class));
 
-        servletContext.setAttribute("bookCategories", bookCategories);
+        servletContext.setAttribute("productCategories", productInfo);
         if(globalParameters!=null && globalParameters.size() != 0){
             servletContext.setAttribute("globalParameter", globalParameters.get(0));
         }

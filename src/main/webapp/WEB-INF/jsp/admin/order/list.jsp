@@ -101,7 +101,7 @@
                 <td width="300px">
                     <c:forEach items="${orderCustom.orderDetails}" var="orderDetail">
                         <span>${orderDetail.mount}&nbsp;x</span>
-                        <a href="book/info/${orderDetail.bookId}" title="${orderDetail.bookName}" target="_blank"><img src="${orderDetail.imageUrl}" width="20%"/></a>
+                        <a href="product/info/${orderDetail.productId}" title="${orderDetail.productName}" target="_blank"><img src="${orderDetail.imageUrl}" width="20%"/></a>
                     </c:forEach>
                 </td>
                 <td>${orderCustom.order.statusString}</td>

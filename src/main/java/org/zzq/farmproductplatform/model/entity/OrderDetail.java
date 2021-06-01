@@ -19,8 +19,8 @@ public class OrderDetail {
     @Column(name = "order_id")
     private String orderId;
 
-    @Column(name = "book_id")
-    private Integer bookId;
+    @Column(name = "product_id")
+    private Integer productId;
 
     @Column(name = "store_id")
     private Integer storeId;
@@ -61,8 +61,8 @@ public class OrderDetail {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "book_name")
-    private String bookName;
+    @Column(name = "product_name")
+    private String productName;
 
     /**
      * @return order_detail_id
@@ -111,17 +111,17 @@ public class OrderDetail {
     }
 
     /**
-     * @return book_id
+     * @return product_id
      */
-    public Integer getBookId() {
-        return bookId;
+    public Integer getproductId() {
+        return productId;
     }
 
     /**
-     * @param bookId
+     * @param productId
      */
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setproductId(Integer productId) {
+        this.productId = productId;
     }
 
     /**
@@ -256,11 +256,11 @@ public class OrderDetail {
         this.imageUrl = imageUrl == null ? null : imageUrl.trim();
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getproductName() {
+        return productName;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setproductName(String productName) {
+        this.productName = productName;
     }
 }

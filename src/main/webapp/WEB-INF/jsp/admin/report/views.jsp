@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>人气书籍</title>
+    <title>人气农产品籍</title>
     <base href="<%=basePath%>">
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script src="js/highcharts/highcharts.js"></script>
@@ -28,7 +28,7 @@
                     type: 'pie'
                 },
                 title: {
-                    text: '书籍访问量前8名',
+                    text: '农产品籍访问量前8名',
                     style:{"fontSize": "22px"}
                 },
                 tooltip: {

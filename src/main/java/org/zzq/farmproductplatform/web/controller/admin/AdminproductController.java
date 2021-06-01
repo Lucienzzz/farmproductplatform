@@ -27,12 +27,12 @@ import java.io.File;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/admin/book")
-@RequiresPermissions("book-manage")
-public class AdminBookController {
+@RequestMapping("/admin/product")
+@RequiresPermissions("product-manage")
+public class AdminproductController {
 
     @Autowired
-    private IProductInfoService bookInfoService;
+    private IProductInfoService productInfoService;
 
     @Autowired
     private ProductDescMapper productDescMapper;
@@ -44,24 +44,24 @@ public class AdminBookController {
     private String urlPrefix;
 
     @RequestMapping("toAddition")
-    @RequiresPermissions("book-add")
+    @RequiresPermissions("product-add")
     public String toAddition() {
-        return "admin/book/add";
+        return "admin/product/add";
     }
 
     @RequestMapping("/addition")
-    @RequiresPermissions("book-add")
-    public String addBook(ProductInfo productInfo, String bookDesc, MultipartFile pictureFile, HttpServletRequest request) throws Exception {
+    @RequiresPermissions("product-add")
+    public String addproduct(ProductInfo productInfo, String productDesc, MultipartFile pictureFile, HttpServletRequest request) throws Exception {
 
         uploadPicture(productInfo, pictureFile, request);
-        bookInfoService.saveBook(productInfo, bookDesc);
+        productInfoService.saveproduct(productInfo, productDesc);
 
-        return "redirect:/admin/book/list";
+        return "redirect:/admin/product/list";
     }
 
     @RequestMapping(value = "/list")
-    @RequiresPermissions("book-query")
-    public String bookList(@RequestParam(defaultValue = "", required = false) String keywords,
+    @RequiresPermissions("product-query")
+    public String productList(@RequestParam(defaultValue = "", required = false) String keywords,
                            @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                            HttpSession session,
                            Model model) {
@@ -69,75 +69,75 @@ public class AdminBookController {
         Store store = (Store) session.getAttribute("loginStore");
 
         if (store != null) {
-            PageInfo<ProductInfo> books = bookInfoService.findBookListByCondition(keywords, 0, page, 10, store.getStoreId());
-            model.addAttribute("bookPageInfo", books);
+            PageInfo<ProductInfo> products = productInfoService.findproductListByCondition(keywords, 0, page, 10, store.getStoreId());
+            model.addAttribute("productPageInfo", products);
             model.addAttribute("keywords", keywords);
         } else {
             model.addAttribute("exception", "您请求的资源不存在");
             return "exception";
         }
 
-        return "admin/book/list";
+        return "admin/product/list";
     }
 
     /**
      * 更新页面回显
      *
-     * @param bookId
+     * @param productId
      * @param model
      * @return
      * @throws Exception
      */
     @RequestMapping("/echo")
-    @RequiresPermissions("book-edit")
-    public String echo(int bookId, Model model) throws BSException {
+    @RequiresPermissions("product-edit")
+    public String echo(int productId, Model model) throws BSException {
 
-        ProductInfo productInfo = bookInfoService.adminFindById(bookId);
+        ProductInfo productInfo = productInfoService.adminFindById(productId);
 
         ProductDesc productDesc = productDescMapper.selectByPrimaryKey(productInfo.getProductId());
 
-        model.addAttribute("bookInfo", productInfo);
+        model.addAttribute("productInfo", productInfo);
 
-        model.addAttribute("bookDesc", productDesc);
+        model.addAttribute("productDesc", productDesc);
 
-        return "admin/book/edit";
+        return "admin/product/edit";
     }
 
     @RequestMapping("/update")
-    @RequiresPermissions("book-edit")
-    public String updateBook(ProductInfo productInfo, String bookDesc, String keywords, MultipartFile pictureFile, HttpServletRequest request, RedirectAttributes ra) throws Exception {
+    @RequiresPermissions("product-edit")
+    public String updateproduct(ProductInfo productInfo, String productDesc, String keywords, MultipartFile pictureFile, HttpServletRequest request, RedirectAttributes ra) throws Exception {
         uploadPicture(productInfo, pictureFile, request);
-        ProductInfo originBook = bookInfoService.findById(productInfo.getProductId());
-        bookInfoService.updateBook(productInfo, bookDesc);
+        ProductInfo originproduct = productInfoService.findById(productInfo.getProductId());
+        productInfoService.updateproduct(productInfo, productDesc);
 
         //更新图片后，删除原来的图片
         String realPath = request.getServletContext().getRealPath("/");
-        File uploadPic = new File(realPath + originBook.getImageUrl());
+        File uploadPic = new File(realPath + originproduct.getImageUrl());
         uploadPic.delete();
-        //重定向到书籍列表
+        //重定向到农产品籍列表
         ra.addAttribute("keywords", keywords);
-        return "redirect:/admin/book/list";
+        return "redirect:/admin/product/list";
     }
 
-    @RequestMapping("/deletion/{bookId}")
-    @RequiresPermissions("book-delete")
-    public String deletion(@PathVariable("bookId") int bookId, String keywords, RedirectAttributes ra, HttpServletRequest request) throws BSException {
-        ProductInfo productInfo = bookInfoService.findById(bookId);
+    @RequestMapping("/deletion/{productId}")
+    @RequiresPermissions("product-delete")
+    public String deletion(@PathVariable("productId") int productId, String keywords, RedirectAttributes ra, HttpServletRequest request) throws BSException {
+        ProductInfo productInfo = productInfoService.findById(productId);
         String realPath = request.getServletContext().getRealPath("/");
         File uploadPic = new File(realPath + productInfo.getImageUrl());
         uploadPic.delete();
-        bookInfoService.deleteBook(bookId);
+        productInfoService.deleteproduct(productId);
         ra.addAttribute("keywords", keywords);
-        return "redirect:/admin/book/list";
+        return "redirect:/admin/product/list";
     }
 
     @RequestMapping("/shelf")
-    @RequiresPermissions("book-shelf")
-    public String bookOffShelf(int bookId, int isShelf, String keywords, RedirectAttributes ra) {
+    @RequiresPermissions("product-shelf")
+    public String productOffShelf(int productId, int isShelf, String keywords, RedirectAttributes ra) {
 
-        bookInfoService.changeShelfStatus(bookId, isShelf);
+        productInfoService.changeShelfStatus(productId, isShelf);
         ra.addAttribute("keywords", keywords);
-        return "redirect:/admin/book/list";
+        return "redirect:/admin/product/list";
     }
 
     private void uploadPicture(ProductInfo productInfo, MultipartFile pictureFile, HttpServletRequest request) throws IOException {

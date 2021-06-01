@@ -30,7 +30,7 @@ public class Alipay extends AbstractPay{
                 alipayConfig.getSignType()); //获得初始化的AlipayClient
 
         Orders order = payContext.getOrders();
-        ProductInfo book = payContext.getProductInfos().get(0);
+        ProductInfo product = payContext.getProductInfos().get(0);
         HttpServletResponse httpResponse = payContext.getResponse();
 
 
@@ -42,8 +42,8 @@ public class Alipay extends AbstractPay{
                 "    \"out_trade_no\":\""+order.getOrderId()+"\"," +
                 "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
                 "    \"total_amount\":\""+order.getPayment()+"\"," +
-                "    \"subject\":\""+book.getOutline()+"\"," +
-                "    \"body\":\""+book.getOutline()+"\"," +
+                "    \"subject\":\""+product.getOutline()+"\"," +
+                "    \"body\":\""+product.getOutline()+"\"," +
                 "    \"passback_params\":\"merchantBizType%3d3C%26merchantBizNo%3d2016010101111\"," +
                 "    \"extend_params\":{" +
                 "    \"sys_service_provider_id\":\"2088511833207846\"" +

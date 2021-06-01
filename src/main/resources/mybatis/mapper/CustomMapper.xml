@@ -50,7 +50,7 @@
       <id column="order_detail_id" jdbcType="INTEGER" property="orderDetailId" />
       <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
       <result column="order_id" jdbcType="VARCHAR" property="orderId" />
-      <result column="book_id" jdbcType="INTEGER" property="bookId" />
+      <result column="product_id" jdbcType="INTEGER" property="productId" />
       <result column="store_id" jdbcType="INTEGER" property="storeId" />
       <result column="mount" jdbcType="INTEGER" property="mount" />
       <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
@@ -59,7 +59,7 @@
       <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
       <result column="receive_status" jdbcType="VARCHAR" property="receiveStatus" />
       <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
-      <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+      <result column="product_name" jdbcType="VARCHAR" property="productName" />
     </collection>
 
   </resultMap>
@@ -97,7 +97,7 @@
       od.order_detail_id,
       od.order_number,
       od.order_id,
-      od.book_id,
+      od.product_id,
       od.store_id,
       od.mount,
       od.unit_price,
@@ -106,7 +106,7 @@
       od.delivery_time,
       od.receive_status,
       od.image_url,
-      od.book_name
+      od.product_name
     FROM
      (`orders` o INNER JOIN `order_shipping` os ON o.order_id = os.order_id)
       INNER JOIN `order_detail` od ON o.order_id = od.order_id AND o.user_id = #{userId}
@@ -146,7 +146,7 @@
       od.order_detail_id,
       od.order_number,
       od.order_id,
-      od.book_id,
+      od.product_id,
       od.store_id,
       od.mount,
       od.unit_price,
@@ -155,7 +155,7 @@
       od.delivery_time,
       od.receive_status,
       od.image_url,
-      od.book_name
+      od.product_name
     FROM
      (`orders` o INNER JOIN `order_shipping` os ON o.order_id = os.order_id)
       INNER JOIN `order_detail` od ON o.order_id = od.order_id AND od.store_id = #{storeId}

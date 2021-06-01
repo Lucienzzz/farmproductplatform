@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IOrderDetailService {
 
-    List<ProductInfo> findBooksByOrderId(String orderId);
+    List<ProductInfo> findproductsByOrderId(String orderId);
 }

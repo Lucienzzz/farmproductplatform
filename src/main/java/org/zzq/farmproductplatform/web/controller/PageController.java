@@ -54,15 +54,15 @@ public class PageController {
         return "admin/left";
     }
 
-    //书籍访问量饼状图页面
+    //农产品籍访问量饼状图页面
     @RequestMapping("/admin/report/views")
-    public String storeBookViews(){
+    public String storeproductViews(){
         return "admin/report/views";
     }
 
-    //书籍销量饼状图页面
+    //农产品籍销量饼状图页面
     @RequestMapping("/admin/report/sales")
-    public String storeBookSales(){
+    public String storeproductSales(){
         return "admin/report/sales";
     }
 

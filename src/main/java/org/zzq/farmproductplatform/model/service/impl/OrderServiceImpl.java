@@ -115,7 +115,7 @@ public class OrderServiceImpl implements IOrderService {
                 if (cartItem.getBuyNum() > 0 && cartItem.isChecked()) {
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setOrderId(orderId);
-                    orderDetail.setBookId(cartItemEntry.getKey());
+                    orderDetail.setproductId(cartItemEntry.getKey());
                     orderDetail.setMount(cartItem.getBuyNum());
                     orderDetail.setOrderNumber(orderId);
                     orderDetail.setPostStatus(NOT_COMPLETED + "");
@@ -124,7 +124,7 @@ public class OrderServiceImpl implements IOrderService {
                     orderDetail.setTotalPrice(BigDecimal.valueOf(cartItem.getSubTotal()));
                     orderDetail.setUnitPrice(cartItem.getProductInfo().getPrice());
                     orderDetail.setImageUrl(cartItem.getProductInfo().getImageUrl());
-                    orderDetail.setBookName(cartItem.getProductInfo().getName());
+                    orderDetail.setproductName(cartItem.getProductInfo().getName());
                     orderDetails.add(orderDetail);
                     orderDetailMapper.insert(orderDetail);
                 }
@@ -175,21 +175,21 @@ public class OrderServiceImpl implements IOrderService {
         orderMapper.updateByPrimaryKey(order);
 
         //更新库存
-        List<ProductInfo> books = payContext.getProductInfos();
+        List<ProductInfo> products = payContext.getProductInfos();
 
         Example example = new Example(OrderDetail.class);
         Example.Criteria criteria = example.createCriteria();
 
 
-        books.forEach(bookInfo -> {
+        products.forEach(productInfo -> {
             example.clear();
-            criteria.andEqualTo("bookId", bookInfo.getProductId());
+            criteria.andEqualTo("productId", productInfo.getProductId());
             List<OrderDetail> orderDetails = orderDetailMapper.selectByExample(example);
             if(orderDetails != null && !orderDetails.isEmpty()){
-                bookInfo.setStoreMount(bookInfo.getStoreMount()-orderDetails.get(0).getMount());
-                bookInfo.setDealMount(bookInfo.getDealMount()+orderDetails.get(0).getMount());
+                productInfo.setStoreMount(productInfo.getStoreMount()-orderDetails.get(0).getMount());
+                productInfo.setDealMount(productInfo.getDealMount()+orderDetails.get(0).getMount());
             }
-            productInfoMapper.updateByPrimaryKey(bookInfo);
+            productInfoMapper.updateByPrimaryKey(productInfo);
         });
 
     }

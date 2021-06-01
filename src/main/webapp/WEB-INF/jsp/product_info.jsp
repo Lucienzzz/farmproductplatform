@@ -14,15 +14,15 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bs.css"/>
-    <link rel="stylesheet" href="css/book_info.css"/>
+    <link rel="stylesheet" href="css/product_info.css"/>
 
 
-    <title>书籍详情</title>
+    <title>农产品详情</title>
     <script type="application/javascript">
         $(function () {
 
-            $(".book_message li").click(function () {
-                $(".book_message li").removeClass("active");
+            $(".product_message li").click(function () {
+                $(".product_message li").removeClass("active");
                 $(this).addClass("active");
                 $(".nav_content").hide();
                 var name = $(this).attr("id");
@@ -44,12 +44,12 @@
             });
         });
 
-        function buyNow(bookId) {
-            location.href =  "<%=basePath%>" + "order/info?bookId=" + bookId + "&buyNum=" + $("#buy_num").val();
+        function buyNow(productId) {
+            location.href =  "<%=basePath%>" + "order/info?productId=" + productId + "&buyNum=" + $("#buy_num").val();
         }
 
-        function addCart(bookId) {
-            location.href = "<%=basePath%>" + "cart/addition?bookId=" + bookId + "&buyNum=" + $("#buy_num").val();
+        function addCart(productId) {
+            location.href = "<%=basePath%>" + "cart/addition?productId=" + productId + "&buyNum=" + $("#buy_num").val();
         }
     </script>
 </head>
@@ -57,12 +57,6 @@
 <body>
 
 <jsp:include page="header.jsp"/>
-
-<!--
-    作者：offline
-    时间：2018-10-26
-    描述：商品详情
--->
 <div class="container">
     <div class="row" style="border-bottom:1px dashed #CCCCCC;margin-bottom:15px ;">
         <a href="#">
@@ -71,17 +65,17 @@
     </div>
     <div class="row" id="breadcrumb" style="margin-bottom:40px" ;>
         <a href="index" target="_blank">
-            <b>图书</b>
+            <b>农产品</b>
         </a>
         <span>&gt;</span>
-        <a href="book/list?cateId=${productInfo.bookCategoryId}" target="_blank">${productInfo.categoryName}</a>
+        <a href="product/list?cateId=${productInfo.productCategoryId}" target="_blank">${productInfo.categoryName}</a>
         <span>&gt;</span>
         <b>${productInfo.name}</b>
     </div>
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="height: 400px;">
             <div>
-                <a href="book/info/${productInfo.bookId}">
+                <a href="product/info/${productInfo.productId}">
                     <img src="${productInfo.imageUrl}" width="290px" height="290px"/>
                 </a>
             </div>
@@ -93,19 +87,9 @@
                     <span>${productInfo.outline}</span>
                 </h2>
             </div>
-            <div class="book_info_base">
-						<span class="book_info_span">
-								作者<a href="#">${productInfo.author}</a>著，
-								<a href="#">${productInfo.press}</a>&nbsp;出品
-							</span>
-                <span class="book_info_span">
-								出版社：<a href="" target="_blank">${productInfo.press}</a>
-							</span>
-                <span class="book_info_span">
-								出版日期：<fmt:formatDate value="${productInfo.publishDate}" pattern="yyyy-MM-dd"/>
-							</span>
+            <div class="product_info_base">
             </div>
-            <div class="book_price">
+            <div class="product_price">
                 <p class="what_price">特价</p>
                 <p class="price_info">
                     <span class="rob" style="font-size: 30px;">￥${productInfo.price}</span>
@@ -124,13 +108,13 @@
                 </div>
                 <div class="buy_div">
                     <div class="cart">
-                        <a href="javascript:void(0);" onclick="addCart(${productInfo.bookId})" class="add_cart">
+                        <a href="javascript:void(0);" onclick="addCart(${productInfo.productId})" class="add_cart">
                             <i class="cart_icon"></i> 加入购物车
                         </a>
                     </div>
                 </div>
                 <div class="buy_div buy_now_div">
-                    <a href="javascript:void(0);" onclick="buyNow(${productInfo.bookId})" class="buy_now">立即购买</a>
+                    <a href="javascript:void(0);" onclick="buyNow(${productInfo.productId})" class="buy_now">立即购买</a>
                 </div>
                 <div class="clear"></div>
                 <div class="buy_tip">每账户最多可购买<b>10</b>件</div>
@@ -143,21 +127,19 @@
                 <h3 style="">浏览此商品的顾客也同时浏览</h3>
                 <ul class="product_left_ul">
 
-                    <c:forEach items="${recommendBookList}" var="recommendBook">
-                        <c:if test="${recommendBook.bookId != productInfo.bookId}">
+                    <c:forEach items="${recommendproductList}" var="recommendproduct">
+                        <c:if test="${recommendproduct.productId != productInfo.productId}">
                             <li class="product_li">
                                 <p class="pic">
-                                    <a href="book/info/${recommendBook.bookId}" class="img" target="_blank">
-                                        <img src="${recommendBook.imageUrl}"/>
+                                    <a href="product/info/${recommendproduct.productId}" class="img" target="_blank">
+                                        <img src="${recommendproduct.imageUrl}"/>
                                     </a>
                                 <p class="price">
-                                    <span class="rob">￥${recommendBook.price}</span>
-                                    <span class="oprice">￥${recommendBook.marketPrice}</span>
+                                    <span class="rob">￥${recommendproduct.price}</span>
+                                    <span class="oprice">￥${recommendproduct.marketPrice}</span>
                                 </p>
                                 <p class="name">
-                                    <a href="book/info/${recommendBook.bookId}">${recommendBook.name}</a>
-                                </p>
-                                <p class="author">${recommendBook.author} 著，${recommendBook.press} 出</p>
+                                    <a href="product/info/${recommendproduct.productId}">${recommendproduct.name}</a>
                                 </p>
                             </li>
                         </c:if>
@@ -167,29 +149,22 @@
         </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 
-            <ul class="nav nav-tabs nav-justified book_message">
-                <li class="active" id="book_detail">
-                    <a href="javascript:void(0)">书籍详情</a>
+            <ul class="nav nav-tabs nav-justified product_message">
+                <li class="active" id="product_detail">
+                    <a href="javascript:void(0)">农产品详情</a>
                 </li>
-                <li id="book_comment">
-                    <a href="javascript:void(0)">书籍评论</a>
+                <li id="product_comment">
+                    <a href="javascript:void(0)">农产品评论</a>
                 </li>
             </ul>
             <div class="content">
-                <div id="book_detail_content" class="nav_content">
-                    <ul id="key">
-                        <li>开 本：${productInfo.size}</li>
-                        <li>纸 张：胶版纸</li>
-                        <li>包 装：${productInfo.packStyle}</li>
-                        <li>是否套装：否</li>
-                        <li>国际标准书号ISBN：${productInfo.isbn}</li>
-                    </ul>
+                <div id="product_detail_content" class="nav_content">
                     <div id="detail" class="section">
 
 
-                        <div id="bookDetail" class="section">
+                        <div id="productDetail" class="section">
                             <div class="title">
-                                <span class="title_span">书籍详情</span>
+                                <span class="title_span">农产品详情</span>
                             </div>
                             <p>
                                 ${productInfo.detail}
@@ -202,54 +177,16 @@
                                 <span class="title_span">产品特色</span>
                             </div>
                             <p>
-                                ${empty productDesc.productDesc?"<img src='book/book3_1.jpg'>":productDesc.productDesc}
+                                ${empty productDesc.productDesc?"":productDesc.productDesc}
                             </p>
                         </div>
                         <div class="abstract" class="section">
-                            <div class="title">
-                                <span class="title_span">作者简介</span>
-                            </div>
-                            <blockquote>
-                                <pre>${productInfo.author}</pre>
-                            </blockquote>
                         </div>
                         <div class="content" class="section">
-                            <div class="title">
-                                <span class="title_span">目　　录</span>
-                            </div>
-                            <blockquote>
-                                <pre>${productInfo.catalog}</pre>
-                            </blockquote>
                         </div>
-                        <%--	<div id="authorIntroduction" class="section">
-                                <div class="title">
-                                    <span class="title_span">免费在线阅读</span>
-                                </div>
-                                <blockquote>
-                                    <pre>
-                                题梅
-宋·王柏
-万物正摇落，
-梅花独可人。
-空中三五点，
-天地便精神。
-末两句，极见精神。
-今日小寒。一年里倒数第二个节气。小寒三候：一候雁
-北乡，二候鹊始巢，三候雉始雊。传统的“二十四番花信风”，也从小寒节气开始数起，分别是：一候梅花，二候山茶，三候水仙。所以今天读这首梅花小诗。
-“二十四番花信风”，名单互有差异。现存最早完整的，见于明王逵《蠡海集· 气候类》：“小寒 ：一候梅花，二候山茶，三候水仙 ；大寒 ：一候瑞香，二候兰花，三候山矾；立春：一候迎春，二候樱桃，三候望春 ；雨水 ：一候菜花，二候杏花，三候李花 ；惊蛰 ：一候桃花，二候棣棠，三候蔷薇 ；春分 ：一候海棠，二候梨花，三候木兰 ；清明 ：一候桐花，二候麦花，三候柳花 ；谷雨 ：一候牡丹，二候酴醿，三候楝花。”
-画梅二首其二
-明·怀渭
-折得江南春，
-怅望洛阳客。
-悠悠岁年暮，
-浩浩风尘隔。
-远道勿相思，
-                            </pre>
-                                </blockquote>
-                            </div>--%>
                     </div>
                 </div>
-                <div id="book_comment_content" style="display: none;" class="nav_content">
+                <div id="product_comment_content" style="display: none;" class="nav_content">
                     商品评论
                 </div>
             </div>

@@ -5,16 +5,16 @@ import java.util.List;
 public class Bar {
 
 
-    private List<String> bookNames;
+    private List<String> productNames;
 
     private List<Integer> sales;
 
-    public List<String> getBookNames() {
-        return bookNames;
+    public List<String> getproductNames() {
+        return productNames;
     }
 
-    public void setBookNames(List<String> bookNames) {
-        this.bookNames = bookNames;
+    public void setproductNames(List<String> productNames) {
+        this.productNames = productNames;
     }
 
     public List<Integer> getSales() {

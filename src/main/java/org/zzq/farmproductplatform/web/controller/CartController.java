@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CartController {
 
     @Autowired
-    private IProductInfoService bookInfoService;
+    private IProductInfoService productInfoService;
 
     @Autowired
     private ICartService cartService;
@@ -30,27 +30,27 @@ public class CartController {
     /**
      * 加入购物车
      *
-     * @param bookId
+     * @param productId
      * @param request
      * @return
      */
     @RequestMapping("/addition")
-    public String addToCart(@RequestParam(value = "bookId",defaultValue = "0") int bookId,
+    public String addToCart(@RequestParam(value = "productId",defaultValue = "0") int productId,
                             @RequestParam(required = false,defaultValue = "0") int buyNum,
                             HttpServletRequest request) {
 
         Cart cart = (Cart) request.getSession().getAttribute("cart");
-        //根据要加入购物车的bookId查询bookInfo
-        ProductInfo productInfo = bookInfoService.queryBookAvailable(bookId);
+        //根据要加入购物车的productId查询productInfo
+        ProductInfo productInfo = productInfoService.queryproductAvailable(productId);
 
         if (productInfo != null) {
-            //这本书在数据库里
+            //这本农产品在数据库里
             BSResult bsResult = cartService.addToCart(productInfo, cart, buyNum);
             request.getSession().setAttribute("cart", bsResult.getData());
-            request.setAttribute("bookInfo", productInfo);
+            request.setAttribute("productInfo", productInfo);
         } else {
-            //数据库里没有这本书,或库存不足
-            request.setAttribute("bookInfo", null);
+            //数据库里没有这本农产品,或库存不足
+            request.setAttribute("productInfo", null);
         }
         return "addcart";
     }
@@ -61,29 +61,29 @@ public class CartController {
         return "cart";
     }
 
-    @GetMapping("/deletion/{bookId}")
-    public String deleteCartItem(@PathVariable("bookId") int bookId,HttpServletRequest request){
-        cartService.deleteCartItem(bookId, request);
+    @GetMapping("/deletion/{productId}")
+    public String deleteCartItem(@PathVariable("productId") int productId,HttpServletRequest request){
+        cartService.deleteCartItem(productId, request);
         return "redirect:/cart/items";
     }
 
     /**
      * 更新某个购物车项的购买数量
-     * @param bookId
+     * @param productId
      * @param newNum
      * @param request
      * @return
      */
     @PostMapping("/buy/num/update")
     @ResponseBody
-    public BSResult updateBuyNum(int bookId, int newNum, HttpServletRequest request){
-        return cartService.updateBuyNum(bookId, newNum, request);
+    public BSResult updateBuyNum(int productId, int newNum, HttpServletRequest request){
+        return cartService.updateBuyNum(productId, newNum, request);
     }
 
     @PostMapping("/checkOne")
     @ResponseBody
-    public BSResult checkACartItem(int bookId,HttpServletRequest request){
+    public BSResult checkACartItem(int productId,HttpServletRequest request){
         Cart cart = (Cart)request.getSession().getAttribute("cart");
-        return cartService.checkedOrNot(cart, bookId);
+        return cartService.checkedOrNot(cart, productId);
     }
 }

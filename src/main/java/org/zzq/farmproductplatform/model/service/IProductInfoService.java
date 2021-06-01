@@ -11,27 +11,27 @@ import java.util.List;
 
 public interface IProductInfoService {
 
-    List<ProductInfo> findBookListByCateId(int cateId, int currentPage, int pageSize);
+    List<ProductInfo> findProductListByCateId(int cateId, int currentPage, int pageSize);
 
-    ProductInfo findById(Integer bookId) throws BSException;
+    ProductInfo findById(Integer productId) throws BSException;
 
-    PageInfo<ProductInfo> findBookListByCondition(String keywords, int cateId, int page, int pageSize, int storeId);
+    PageInfo<ProductInfo> findproductListByCondition(String keywords, int cateId, int page, int pageSize, int storeId);
 
-    ProductInfo queryBookAvailable(int bookId);
+    ProductInfo queryproductAvailable(int productId);
 
-    BSResult saveBook(ProductInfo productInfo, String bookDescStr);
+    BSResult saveproduct(ProductInfo productInfo, String productDescStr);
 
-    BSResult updateBook(ProductInfo productInfo, String bookDesc);
+    BSResult updateproduct(ProductInfo productInfo, String productDesc);
 
-    BSResult changeShelfStatus(int bookId,int shelf);
+    BSResult changeShelfStatus(int productId,int shelf);
 
-    ProductInfo adminFindById(int bookId) throws BSException;
+    ProductInfo adminFindById(int productId) throws BSException;
 
-    BSResult deleteBook(int bookId);
+    BSResult deleteproduct(int productId);
 
     int addLookMount(ProductInfo productInfo);
 
-    List<Pie> getBookViewsPiesByStoreId(Integer storeId);
+    List<Pie> getproductViewsPiesByStoreId(Integer storeId);
 
-    Bar getBookSalesBarJson(Integer storeId);
+    Bar getproductSalesBarJson(Integer storeId);
 }

@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * 书籍分类服务
- */
+
 @Service
 public class ProductCateServiceImpl implements IProductCateService {
 
