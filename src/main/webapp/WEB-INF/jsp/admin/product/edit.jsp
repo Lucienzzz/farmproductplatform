@@ -43,15 +43,9 @@
                         required: true,
                         number: true
                     },
-                    author: {
-                        required: true
-                    },
                     publishDate: {
                         required: true,
                         date:true
-                    },
-                    press: {
-                        required: true
                     },
                     productCategoryId: {
                         required: true
@@ -79,24 +73,14 @@
                         required: "请输入定价",
                         number: "必须是数字"
                     },
-                    author: {
-                        required: "请输入作者"
-                    },
-                    publishDate: {
-                        required: "请填写出版时间",
-                        date:"时间格式不正确"
-                    },
-                    press: {
-                        required: "请输入出版社"
-                    },
                     productCategoryId: {
                         required: "请选择类别"
                     },
                     outline: {
-                        required: "请填写农产品籍概要"
+                        required: "请填写农产品概要"
                     },
                     productDesc: {
-                        required: "请添加农产品籍详情"
+                        required: "请添加农产品详情"
                     }
                 }
             });
@@ -155,30 +139,6 @@
         </div>
 
         <div class="form-group">
-            <label for="author" class="col-sm-1 control-label" style="padding-left: 0">作者：</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" id="author" value="${productInfo.author}" name="author" placeholder="请输入作者">
-            </div>
-            <span></span>
-        </div>
-
-        <div class="form-group">
-            <label for="press" class="col-sm-1 control-label" style="padding-left: 0">出版日期：</label>
-            <div class="col-sm-5">
-                <input type="date" class="form-control" id="publishDate" value="<fmt:formatDate value='${productInfo.publishDate }' pattern='yyyy-MM-dd'/>" placeholder="例:2016-01-01" name="publishDate" >
-            </div>
-            <span></span>
-        </div>
-
-        <div class="form-group">
-            <label for="press" class="col-sm-1 control-label" style="padding-left: 0">出版社：</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" id="press" name="press" value="${productInfo.press}" placeholder="请输入出版社">
-            </div>
-            <span></span>
-        </div>
-
-        <div class="form-group">
             <label for="productCategoryId" class="col-sm-1 control-label" >类型：</label>
             <div class="col-sm-5">
                 <select name="productCategoryId" id="productCategoryId" class="form-control" style="width: 100px;">
@@ -206,7 +166,7 @@
             <span></span>
         </div>
         <div class="form-group">
-            <label for="productDesc" class="col-sm-1 control-label" style="padding: 0">农产品籍详情：</label>
+            <label for="productDesc" class="col-sm-1 control-label" style="padding: 0">农产品详情：</label>
         </div>
         <!-- 加载编辑器的容器 -->
         <script id="productDesc" name="productDesc" id="productDesc" type="text/plain">
@@ -225,15 +185,6 @@
     <script type="text/javascript" src="ueditor/ueditor.all.js"></script>
     <!-- 实例化编辑器 -->
     <script type="text/javascript">
-
-        /*UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-        UE.Editor.prototype.getActionUrl = function(action) {
-            if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadvideo') {
-                return 'product/image/upload';
-                    } else {
-                        return this._bkGetActionUrl.call(this, action);
-                    }
-                }*/
         var ue = UE.getEditor('productDesc');
 
         //对编辑器的操作最好在编辑器ready之后再做

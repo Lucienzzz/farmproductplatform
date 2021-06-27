@@ -50,12 +50,12 @@ public class ProductInfoServiceImpl implements IProductInfoService {
     public List<ProductInfo> findProductListByCateId(int cateId, int currentPage, int pageSize) {
         //设置分页信息，当前页，每页显示多少
         PageHelper.startPage(currentPage, pageSize);
-        Example productInfoExample = new Example(ProductInfo.class);
-        Example.Criteria criteria = productInfoExample.createCriteria();
+        Example example = new Example(ProductInfo.class);
+        Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("productCategoryId", cateId);
         criteria.andEqualTo("isShelf", 1);
-        productInfoExample.setOrderByClause("deal_mount DESC,look_mount DESC");
-        List<ProductInfo> products = productInfoMapper.selectByExample(productInfoExample);
+        example.setOrderByClause("deal_mount DESC,look_mount DESC");
+        List<ProductInfo> products = productInfoMapper.selectByExample(example);
         PageInfo<ProductInfo> pageInfo = new PageInfo<>(products);
         return pageInfo.getList();
     }
@@ -63,11 +63,11 @@ public class ProductInfoServiceImpl implements IProductInfoService {
     @Override
     @Cacheable(cacheNames="product",key = "'productInfo_'+#productId")
     public ProductInfo findById(Integer productId) throws BSException {
-        Example productInfoExample = new Example(ProductInfo.class);
-        Example.Criteria criteriaOfIsShelf = productInfoExample.createCriteria();
+        Example example = new Example(ProductInfo.class);
+        Example.Criteria criteriaOfIsShelf = example.createCriteria();
         criteriaOfIsShelf.andEqualTo("isShelf", 1);
         criteriaOfIsShelf.andEqualTo("productId", productId);
-        List<ProductInfo> productInfos = productInfoMapper.selectByExample(productInfoExample);
+        List<ProductInfo> productInfos = productInfoMapper.selectByExample(example);
         if (productInfos == null || productInfos.size() == 0) {
             throw new BSException("你搜索的农产品不存在或未上架！");
         }
@@ -82,7 +82,7 @@ public class ProductInfoServiceImpl implements IProductInfoService {
     }
 
     /**
-     * 按照一堆条件搜索农产品籍，查询关键字可以是农产品名、关键字或ISBN
+     * 按照一堆条件搜索农产品籍，查询关键字可以是农产品名、
      *
      * @param keywords
      * @param cateId
@@ -94,32 +94,32 @@ public class ProductInfoServiceImpl implements IProductInfoService {
     @Override
     public PageInfo<ProductInfo> findproductListByCondition(String keywords, int cateId, int page, int pageSize, int storeId) {
         PageHelper.startPage(page, pageSize);
-        Example productInfoExample = new Example(ProductInfo.class);
+        Example example = new Example(ProductInfo.class);
         if (!StringUtils.isEmpty(keywords)) {
             String s = "%" + keywords + "%";
-            Example.Criteria criteriaOfKeywords = productInfoExample.createCriteria();
+            Example.Criteria criteriaOfKeywords = example.createCriteria();
             criteriaOfKeywords.orLike("name", s);
         }
         if (cateId != 0) {
             //加分类Id查询条件,where (name like ? or author like ? or isbn like ?) and cateId = ?
-            Example.Criteria criteriaOfCateId = productInfoExample.createCriteria();
+            Example.Criteria criteriaOfCateId = example.createCriteria();
             criteriaOfCateId.andEqualTo("productCategoryId", cateId);
-            productInfoExample.and(criteriaOfCateId);
+            example.and(criteriaOfCateId);
         }
 
         if (storeId == 0) {
             //前台展示，是否上架
-            Example.Criteria criteriaOfIsShelf = productInfoExample.createCriteria();
+            Example.Criteria criteriaOfIsShelf = example.createCriteria();
             criteriaOfIsShelf.andEqualTo("isShelf", 1);
-            productInfoExample.and(criteriaOfIsShelf);
+            example.and(criteriaOfIsShelf);
         }else{
             //后台管理
-            Example.Criteria criteriaOfStore = productInfoExample.createCriteria();
+            Example.Criteria criteriaOfStore = example.createCriteria();
             criteriaOfStore.andEqualTo("storeId", storeId);
-            productInfoExample.and(criteriaOfStore);
-            productInfoExample.setOrderByClause("store_time DESC");
+            example.and(criteriaOfStore);
+            example.setOrderByClause("store_time DESC");
         }
-        List<ProductInfo> products = productInfoMapper.selectByExample(productInfoExample);
+        List<ProductInfo> products = productInfoMapper.selectByExample(example);
         PageInfo<ProductInfo> pageInfo = new PageInfo<>(products);
 
         return pageInfo;
@@ -128,12 +128,12 @@ public class ProductInfoServiceImpl implements IProductInfoService {
     @Override
     public ProductInfo queryproductAvailable(int productId) {
 
-        Example productInfoExample = new Example(ProductInfo.class);
-        Example.Criteria criteria = productInfoExample.createCriteria();
+        Example example = new Example(ProductInfo.class);
+        Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("productId", productId);
         criteria.andEqualTo("isShelf", 1);
         criteria.andGreaterThan("storeMount", 0);
-        List<ProductInfo> productInfos = productInfoMapper.selectByExample(productInfoExample);
+        List<ProductInfo> productInfos = productInfoMapper.selectByExample(example);
         if (productInfos != null && !productInfos.isEmpty()) {
             return productInfos.get(0);
         }
@@ -206,8 +206,8 @@ public class ProductInfoServiceImpl implements IProductInfoService {
 
     @Override
     public ProductInfo adminFindById(int productId) throws BSException {
-        Example productInfoExample = new Example(ProductInfo.class);
-        Example.Criteria criteriaOfIsShelf = productInfoExample.createCriteria();
+        Example example = new Example(ProductInfo.class);
+        Example.Criteria criteriaOfIsShelf = example.createCriteria();
         criteriaOfIsShelf.andEqualTo("productId", productId);
         ProductInfo productInfo = productInfoMapper.selectByPrimaryKey(productId);
         if(productInfo == null){

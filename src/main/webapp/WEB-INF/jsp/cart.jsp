@@ -197,7 +197,7 @@
                         <span>全选</span>
                     </td>
                     <td>
-                        <span>dd(店铺)</span>
+                        <span>(店铺)</span>
                     </td>
                     <td></td>
                     <td></td>

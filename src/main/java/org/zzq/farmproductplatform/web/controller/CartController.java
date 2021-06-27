@@ -44,7 +44,7 @@ public class CartController {
         ProductInfo productInfo = productInfoService.queryproductAvailable(productId);
 
         if (productInfo != null) {
-            //这本农产品在数据库里
+            //农产品在数据库里
             BSResult bsResult = cartService.addToCart(productInfo, cart, buyNum);
             request.getSession().setAttribute("cart", bsResult.getData());
             request.setAttribute("productInfo", productInfo);

@@ -12,6 +12,4 @@ public abstract class AbstractPay implements IPayService {
         afterPay(payContext);
         return BSResultUtil.success();
     }
-
-
 }

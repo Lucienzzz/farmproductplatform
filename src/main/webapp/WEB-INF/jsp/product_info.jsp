@@ -127,7 +127,7 @@
                 <h3 style="">浏览此商品的顾客也同时浏览</h3>
                 <ul class="product_left_ul">
 
-                    <c:forEach items="${recommendproductList}" var="recommendproduct">
+                    <c:forEach items="${recommendProductList}" var="recommendproduct">
                         <c:if test="${recommendproduct.productId != productInfo.productId}">
                             <li class="product_li">
                                 <p class="pic">
@@ -177,7 +177,7 @@
                                 <span class="title_span">产品特色</span>
                             </div>
                             <p>
-                                ${empty productDesc.productDesc?"":productDesc.productDesc}
+                                ${empty productDesc.productDesc?"xxxxxx":productDesc.productDesc}
                             </p>
                         </div>
                         <div class="abstract" class="section">

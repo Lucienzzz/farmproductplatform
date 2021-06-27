@@ -157,18 +157,7 @@
     </style>
 </head>
 <body>
-<!--
-    作者：offline
-    时间：2018-10-29
-    描述：top
--->
 <jsp:include page="header.jsp"/>
-
-<!--
-    作者：offline
-    时间：2018-10-29
-    描述：logo search
--->
 
 <div class="container">
     <form class="form-horizontal" action="user/update" role="form" id="userInfoForm" method="post">

@@ -34,6 +34,7 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+//        System.out.println("xxxxxxxxxxxxxxxxxxxxxx");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         User user = (User) principalCollection.getPrimaryPrincipal();
         List<Role> roles = customMapper.findRolesByUserId(user.getUserId());
@@ -45,9 +46,9 @@ public class MyShiroRealm extends AuthorizingRealm {
                 authorizationInfo.addStringPermission(privilege.getCode());
             }
         }
-//        for (Privilege privilege : privileges) {
-//            System.out.println(privilege);
-//        }
+        for (Privilege privilege : privileges) {
+            System.out.println(privilege);
+        }
         return authorizationInfo;
     }
 

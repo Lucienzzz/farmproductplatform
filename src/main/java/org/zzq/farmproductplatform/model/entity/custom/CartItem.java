@@ -7,7 +7,6 @@ import org.zzq.farmproductplatform.model.entity.ProductInfo;
  */
 public class CartItem {
 
-
     private ProductInfo productInfo;
 
     private double subTotal;

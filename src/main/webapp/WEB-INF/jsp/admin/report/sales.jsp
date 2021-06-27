@@ -29,7 +29,7 @@
                     text: '农产品总销售额条形图'
                 },
                 subtitle: {
-                    text: '数据来源: dd.com'
+                    text: '数据来源: xx.com'
                 },
                 xAxis: {
                     categories: data.productNames,
@@ -40,7 +40,7 @@
                 yAxis: {
                     min: 0,
                     title: {
-                        text: '销售量 (本)',
+                        text: '销售量 (个)',
                         align: 'high'
                     },
                     labels: {
@@ -48,7 +48,7 @@
                     }
                 },
                 tooltip: {
-                    valueSuffix: ' 本'
+                    valueSuffix: ' 个'
                 },
                 plotOptions: {
                     bar: {

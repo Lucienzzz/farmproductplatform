@@ -37,12 +37,12 @@
 
         function changeproductShelf(productId, isShelf) {
             if (isShelf == 1) {
-                if (confirm("下架农产品籍?")) {
+                if (confirm("下架农产品?")) {
                     location.href = "<%=basePath%>admin/product/shelf?productId=" + productId + "&isShelf=0&"+"keywords="+'${keywords}';
                 }
             }
             if (isShelf == 0) {
-                if (confirm("上架农产品籍?")) {
+                if (confirm("上架农产品?")) {
                     location.href = "<%=basePath%>admin/product/shelf?productId=" + productId + "&isShelf=1&"+"keywords="+'${keywords}';
                 }
             }
@@ -62,7 +62,7 @@
     <div id="searchproduct" style="height:100px;border-bottom: 1px solid #CCCCCC;">
         <form action="admin/product/list" class="form-inline" role="form" method="get">
             <div class="form-group">
-                <input type="text" class="form-control" id="name" name="keywords" value="${keywords}" placeholder="农产品名/作者/isbn">
+                <input type="text" class="form-control" id="name" name="keywords" value="${keywords}" placeholder="农产品名">
             </div>
 
             <button type="submit" class="btn btn-default">
@@ -72,14 +72,12 @@
     </div>
 
     <table class="table table-hover">
-        <caption>农产品籍列表</caption>
+        <caption>农产品列表</caption>
         <thead>
         <tr>
             <th>序号</th>
             <th>农产品名</th>
             <th>图片</th>
-            <th>作者</th>
-            <th>ISBN</th>
             <th>现价</th>
             <th>定价</th>
             <th>状态</th>
@@ -95,8 +93,6 @@
                 <td>
                     <img src="${product.imageUrl}" style="width: 50%">
                 </td>
-                <td>${product.author}</td>
-                <td>${product.isbn}</td>
                 <td class="red">￥${product.price}</td>
                 <td class="red">￥${product.marketPrice}</td>
                 <td class="red">${product.isShelf == 1 ?"上架中":"已下架"}</td>
